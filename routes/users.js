@@ -107,7 +107,7 @@ router.post('/login', csrfProtection, loginValidators, asyncHandler(async (req, 
   const validatorErrors = validationResult(req);
 
   if (validatorErrors.isEmpty()) {
-    const user = await User.findOne({ where: { email } })
+    const user = await User.findOne({ where: { email: email } })
 
     if (user !== null) {
       const passwordMatch = await bcrypt.compare(password, user.hashedPassword.toString());

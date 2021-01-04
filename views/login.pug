@@ -6,10 +6,11 @@ block content
     +validationErrorSummary(errors)
     form(action='/users/login' method='post')
         input(type='hidden' name='_csrf' value=csrfToken)
-        +field('E-mail Address', 'email', user.email)
+        +field('E-mail Address', 'email', 'email')
+        //- be careful of the 3rd argument in line 9 (supposed to be user.email)
         +field('Password', 'password', '', 'password')
         div
             button(type='submit') Login
             a(href='/') Cancel
     div
-        p: a(href='/user/register') Not a Dinosaur? Register Here
+        p: a(href='/users/register') Not a Dinosaur?
