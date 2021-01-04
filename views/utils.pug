@@ -4,4 +4,12 @@ mixin field(labelText, fieldName, fieldValue, fieldType = 'text', placeholder = 
     if fieldType === 'textarea'
       textarea(id=fieldname name=fieldName rows='5')= fieldValue
     else
-      input(type=fieldType id=fieldName value=fielValue placeholder=placeholder)
+      input(type=fieldType name=fieldName value=fielValue placeholder=placeholder)
+
+mixin validationErrorSummary(errors)
+  if (errors)
+    div
+      p The following error(s) occurred:
+      ul
+        each error in errors
+          li= error
