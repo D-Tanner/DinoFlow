@@ -1,5 +1,9 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const bcrypt = require('bcryptjs');
+const { csrfProtection, asyncHandler } = require('./utils')
+const db = require('../db/models')
+const { User } = db
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
@@ -15,13 +19,15 @@ router.post('/login', function (req, res, next) {
   res.redirect('/')
 });
 
-router.get('/register', function (req, res, next) {
-  res.render('index', { title: 'a/A Express Skeleton Home' });
-});
+router.get('/register', csrfProtection, asyncHandler(async (req, res, next) => {
+  const user = User.build()
+  res.render('register-user', { title: 'Register Dinosaur', user, csrfToken: req.csrfToken() })
+}));
 
-router.post('/register', function (req, res, next) {
-  res.render('index', { title: 'a/A Express Skeleton Home' });
-});
+router.const('/register', csrfProtection, asyncHandler(async (req, res, next) => {
+  const { userName, emailAddress, password } = req.body;
+
+}));
 
 
 module.exports = router;

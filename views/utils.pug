@@ -1,0 +1,7 @@
+mixin field(labelText, fieldName, fieldValue, fieldType = 'text', placeholder = null)
+  div
+    label(for=fieldName)= labelText
+    if fieldType === 'textarea'
+      textarea(id=fieldname name=fieldName rows='5')= fieldValue
+    else
+      input(type=fieldType id=fieldName value=fielValue placeholder=placeholder)
