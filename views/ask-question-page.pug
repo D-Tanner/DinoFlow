@@ -6,8 +6,8 @@ block content
   +validationErrorSummary(errors)
   form(action='/ask-question' method='post')
     input(type='hidden' name='_csrf' value=csrfToken)
-    +field('Title', 'title', question.title, 'textarea')
-    +field('Content', 'content', question.content, 'textarea')
+    +field('Title', 'title', question.title, 'text', null, 'question_title')
+    +field('Content', 'content', question.content, 'textarea', 'question_content')
     div
       button(type='submit') Ask a Question
       a(href='/') Cancel
