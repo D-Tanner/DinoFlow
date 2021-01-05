@@ -44,7 +44,15 @@ h1 {
 #login_button{
   background-color: #0095ff;
   color: #ffffff;
-  width: 100%;
+  width: 80%;
+}
+
+#login_cancel{
+  display: block;
+}
+
+#form{
+  margin: 0 auto;
 }
 
 #signup_link{
