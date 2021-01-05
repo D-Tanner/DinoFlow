@@ -3,9 +3,11 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const { sequelize } = require('./db/models');
 const session = require('express-session');
+const { sequelize } = require('./db/models');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
+
+// Router
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 
@@ -17,7 +19,7 @@ app.set('view engine', 'pug');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cookieParser('superSecret'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // set up session middleware
@@ -37,7 +39,7 @@ store.sync();
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter); // might need to remove first parameter ('/users') based on ./routes/users:86
-
+app.use('/login', usersRouter);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
