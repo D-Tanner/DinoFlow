@@ -24,7 +24,6 @@ const questionValidators = [
 ]
 
 
-//I need to assign a question ID for each question that is posted
 router.post('/ask-question', csrfProtection, questionValidators, asyncHandler(async (req, res, next) => {
   const { title, content } = req.body;
   let errors = [];
@@ -32,6 +31,7 @@ router.post('/ask-question', csrfProtection, questionValidators, asyncHandler(as
   const validatorErrors = validationResult(req);
 
   if (validarotErrors.isEmpty()) {
+    //I need to assign a question ID for each question that is posted
     await Question.create({ title, content, userId: req.session.user.id })
     return res.redirect('/')
   } else {
