@@ -10,7 +10,7 @@ module.exports = {
       },
       title: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING(255)
       },
       content: {
         allowNull: false,
@@ -18,7 +18,8 @@ module.exports = {
       },
       userId: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: { model: 'Users' }
       },
       createdAt: {
         allowNull: false,
