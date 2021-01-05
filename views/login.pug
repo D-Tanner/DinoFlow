@@ -1,0 +1,19 @@
+extends layout.pug
+
+block content
+    div(id="container")
+        center
+            div(id="form_block" name="form_block" )
+                center
+                    form(id="login_form" action="/login" method="post")
+                        input(type="hidden" name="_csrf" value= token)
+                        div
+                            label(for="email") Email
+                            input(type="text" id="email" name="email")
+                        div
+                            label(for="password") Password
+                            input(type="password" id="password" name="password")
+                        div
+                            button(id="login_button" name="submit" type="submit") Login
+                        div Don't have an account? 
+                            a(id="signup_link" href="/signup") Sign up
