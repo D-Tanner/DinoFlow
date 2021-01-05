@@ -40,7 +40,7 @@ app.use(
 store.sync();
 
 app.use('/', indexRouter);
-app.use(usersRouter); // might need to remove first parameter ('/users') based on ./routes/users:86
+app.use('/users',usersRouter); // might need to remove first parameter ('/users') based on ./routes/users:86
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

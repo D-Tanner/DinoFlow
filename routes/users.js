@@ -90,7 +90,8 @@ router.post('/register', csrfProtection, userValidators, asyncHandler(async (req
 
 
 router.get('/login', csrfProtection, asyncHandler(async (req, res) => {
-  res.render('login', { title: 'Login', csrfToken: req.csrfToken() })
+  const user = User.findAll();
+  res.render('login', { title: 'Login', user, csrfToken: req.csrfToken() })
 }));
 
 const loginValidators = [
@@ -124,6 +125,7 @@ router.post('/login', csrfProtection, loginValidators, asyncHandler(async (req, 
   }
 
   res.render('login', {
+    user,
     title: 'Login',
     email,
     errors,
