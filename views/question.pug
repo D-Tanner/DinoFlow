@@ -5,5 +5,11 @@ include utils.pug
 block content
   h1= question.title
   h3= question.content
-  each answer in question
-    li= answer
+  //- each answer in question
+  //-   li= answer
+  form(id='answer_to_question')
+    input(type='hidden' name='_csrf' value=csrfToken)
+    +field('Answer', 'answer', 'answer', 'textarea', null, id)
+    div
+      button(type='submit') Answer this Question
+      a(href='/') Cancel

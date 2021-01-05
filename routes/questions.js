@@ -48,11 +48,8 @@ router.post('/ask-question', csrfProtection, questionValidators, asyncHandler(as
 }));
 
 router.get('/question/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => {
-  // const question = await Question.findByPk(req.params.id, { include: { model: Answer } })
-  //const questionId = parseInt(req.params.id, 10)
-  // console.log(questionId)
-  //const question = await Question.findByPk(questionId)
-  const question = Question.findAll()
+  const questionId = parseInt(req.params.id, 10)
+  const question = await Question.findByPk(questionId)
   res.render('question', { title: 'Question', question, csrfToken: req.csrfToken() },)
 }));
 
