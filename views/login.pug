@@ -8,7 +8,7 @@ block content
         center
             div(id="form_block" name="form_block" )
                 center
-                    form(id="form" action='/login' method='post')
+                    form(id="form" action='/users/login' method='post')
                         input(type='hidden' name='_csrf' value=csrfToken)
                         +field('E-mail Address', 'email', user.email , 'E-mail', 'email')
                         //- be careful of the 3rd argument in line 9 (supposed to be user.email)
