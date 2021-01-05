@@ -10,19 +10,24 @@ module.exports = {
       },
       userId: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: { model: 'Users' }
       },
       answerId: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: { model: 'Answers' }
       },
-      upvotes: {
+      // indexes: [{
+      //   unique: true,
+      //   fields: ['userId', 'answerId', 'upvotes']
+      // }, {
+      //   unique: true,
+      //   fields: ['userId', 'answerId', 'downvotes']
+      // }],
+      isUpvote: {
         allowNull: false,
-        type: Sequelize.INTEGER
-      },
-      downvotes: {
-        allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.BOOLEAN
       },
       createdAt: {
         allowNull: false,
