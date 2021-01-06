@@ -19,9 +19,15 @@ window.addEventListener("load", (event) => {
     })
 
     const answer = await response.json()
+    let answerSection = document.querySelector(".answers_section")
+    let newAnswer = document.createElement('div')
+    newAnswer.setAttribute('class', '.single_answers')
+    newAnswer.innerHTML = answer.content
 
-    const newAnswer = document.createElement('div')
-    // newAnswer.innerHTML = answer.content
+    answerSection += answerSection.appendChild(newAnswer)
+
+
+    e.stopImmediatePropagation()
 
 
     //When we hit the submit button, make a post fetch request with new answer

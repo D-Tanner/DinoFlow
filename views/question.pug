@@ -19,7 +19,7 @@ block content
       each answer in answers
         div(id="votes") Votes
         div(class="answers_section")
-          div= answer.dataValues.content
+          div(class="single_answers")= answer.dataValues.content
 
       h2 Your Answer
       form(id='answer_to_question')

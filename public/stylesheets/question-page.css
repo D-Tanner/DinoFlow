@@ -28,6 +28,11 @@ button {
   margin-left: 80px;
 }
 
+.single_answers {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
 #votes {
   margin-left: 0;
 }
