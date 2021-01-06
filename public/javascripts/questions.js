@@ -8,6 +8,8 @@ window.addEventListener("load", (event) => {
     const questionId = formData.get("questionId")
     const body = { content, questionId }
 
+    console.log(formData)
+
     const response = await fetch(`http://localhost:8000/question/${questionId}/answers`, {
       method: "POST",
       body: JSON.stringify(body),
@@ -19,7 +21,6 @@ window.addEventListener("load", (event) => {
     const answer = await response.json()
 
     const newAnswer = document.createElement('div')
-
     // newAnswer.innerHTML = answer.content
 
 
