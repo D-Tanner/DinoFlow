@@ -24,15 +24,18 @@ button {
   margin-right: 20px;
 }
 
-.answers_section {
-  margin-left: 80px;
-}
+/* .answers_section {
+
+} */
 
 .single_answers {
-  padding-top: 15px;
+
   padding-bottom: 15px;
+  margin-left: 100px;
 }
 
-#votes {
+.votes {
   margin-left: 0;
+  float: left;
+  text-align: center;
 }

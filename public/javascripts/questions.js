@@ -21,10 +21,17 @@ window.addEventListener("load", (event) => {
     const answer = await response.json()
     let answerSection = document.querySelector(".answers_section")
     let newAnswer = document.createElement('div')
-    newAnswer.setAttribute('class', '.single_answers')
-    newAnswer.innerHTML = answer.content
+    let newVote = document.createElement('div')
 
-    answerSection += answerSection.appendChild(newAnswer)
+    newAnswer.setAttribute('class', 'single_answers')
+    newVote.setAttribute('class', 'votes')
+
+    newAnswer.innerHTML = answer.content
+    newVote.innerHTML = 'Votes'
+
+    // answerSection += answerSection.appendChild(newAnswer)
+    answerSection.appendChild(newVote)
+    answerSection.appendChild(newAnswer)
 
 
     e.stopImmediatePropagation()
