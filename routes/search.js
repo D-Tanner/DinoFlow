@@ -6,7 +6,16 @@ const { asyncHandler } = require('./utils')
 
 router.get('/search', asyncHandler(async (req, res, next) => {
     const { term } = req.query
-    const questions = await Question.findAll({ where: { title: { [Op.iLike]: `%${term}%` } } })
+    const questions = await Question.findAll({
+        where: {
+            title: {
+                [Op.iLike]: `%${term}%`
+            }
+        },
+        order: [
+            ['createdAt', 'DESC']
+        ]
+    })
     res.render('search', { title: 'Search for a question', questions })
 }))
 

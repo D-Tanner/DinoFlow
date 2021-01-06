@@ -11,7 +11,7 @@ module.exports = {
       // createdAt: new Date(),
       // updatedAt: new Date()
     ]
-    for (let i = 1; i < 10; i++) {
+    for (let i = 1; i < 60; i++) {
       let newQuestion = {
         title: faker.lorem.sentence(),
         content: faker.lorem.paragraph(),
