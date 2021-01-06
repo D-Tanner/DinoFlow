@@ -29,6 +29,7 @@ h1 {
 #container {
   background-color: #eff0f1;
   height: 100vh;
+  padding-top: 20px;
 }
 
 #form_block{
