@@ -2,21 +2,32 @@ extends layout.pug
 
 include utils.pug
 
+append head
+  //- add page specific styles by appending to the head
+  link(rel="stylesheet" href="/stylesheets/question-page.css")
+  //- add page specific js
+  script(src="/javascripts/questions.js" type="module" defer)
+
 block content
-  h1= question.title
-  h3= question.content
+  div(class="container")
+    div(class="content")
+      h1(id="title")= question.title
+      hr
+      div(class="question_content")
+        p= question.content
+      h2 Answers
+      each answer in answers
+        div(class="answers_section")
+          div(class="votes") Votes
+          div(class="single_answers")= answer.dataValues.content
 
-  p Answers
-  each answer in answers
-    div
-      center
-        div= answer.dataValues.content
-
-  form(id='answer_to_question')
-    input(type='hidden' name='_csrf' value=csrfToken)
-    +field('Answer', 'answer', 'answer', 'textarea', null, id)
-    div
-      button(type='submit') Answer this Question
-      a(href='/') Cancel
+      h2 Your Answer
+      form(id='answer_to_question')
+        input(type='hidden' name='_csrf' value=csrfToken)
+        input(type='hidden' name='questionId' value=question.id)
+        +field('', 'answer', 'Write your answer here', 'textarea', null, id)
+        div
+          button(type='submit' id="answer_button") Answer this Question
+          a(href='/') Cancel
 
 //- if a user is logged in, they should see the form prompt
