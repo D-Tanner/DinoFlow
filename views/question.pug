@@ -18,15 +18,16 @@ block content
 
       div(class="votes") Votes
       h2 Answers
-      each answer in answers
-        div
-            div= answer.dataValues.content
-      h2 Your Answer
-      form(id='answer_to_question')
-        input(type='hidden' name='_csrf' value=csrfToken)
-        +field('', 'answer', 'Write your answer here', 'textarea', null, id)
-        div
-          button(type='submit' id="answer_button") Answer this Question
-          a(href='/') Cancel
+      div(class="answers_section")
+        each answer in answers
+          div
+              div= answer.dataValues.content
+        h2 Your Answer
+        form(id='answer_to_question')
+          input(type='hidden' name='_csrf' value=csrfToken)
+          +field('', 'answer', 'Write your answer here', 'textarea', null, id)
+          div
+            button(type='submit' id="answer_button") Answer this Question
+            a(href='/') Cancel
 
 //- if a user is logged in, they should see the form prompt
