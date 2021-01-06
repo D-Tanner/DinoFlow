@@ -6,8 +6,8 @@ block content
   +validationErrorSummary(errors)
   form(action='/ask-question' method='post')
     input(type='hidden' name='_csrf' value=csrfToken)
-    +field('Title', 'title', question.title, 'text', null, 'question_title')
-    +field('Content', 'content', question.content, 'textarea', 'question_content')
+    +field('Title', 'title', 'ex: Is this pterodactyl safe to eat?', 'text', null, 'question_title')
+    +field('Content', 'content', 'ex: I found this dead in the woods but it looks bony, I am hungry.', 'textarea', 'question_content')
     div
       button(type='submit') Ask a Question
       a(href='/') Cancel
