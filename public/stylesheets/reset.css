@@ -58,3 +58,20 @@ h1 {
 #signup_link{
   color: #0095ff;
 }
+
+.alert{
+  box-sizing: border-box;
+  position: relative;
+  height: 30%;
+  width: 30%;
+  padding: 3rem;
+  margin: 20px auto;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background-color: #f5c2c7;
+  color: #842029;
+}
+
+body{
+  background-color: #eff0f1;
+}

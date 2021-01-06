@@ -8,8 +8,8 @@ mixin field(labelText, fieldName, fieldValue, fieldType = 'text', placeholder = 
 
 mixin validationErrorSummary(errors)
   if (errors)
-    div
+    div(class='alert')
       p The following error(s) occurred:
       ul
         each error in errors
-          li= error
+          li(type="none")= error

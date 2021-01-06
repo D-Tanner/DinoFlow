@@ -1,6 +1,9 @@
 extends layout
 
 block content
-  h1= message
-  h2= error.status
-  pre #{error.stack}
+  h1= title
+  h1= message || 'An unexpected error occurred on the server'
+  h2= error
+  if stack
+    h3 Stack Trace
+    pre #{error}
