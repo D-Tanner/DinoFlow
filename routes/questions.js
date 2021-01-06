@@ -54,7 +54,10 @@ router.get('/question/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, 
   res.render('question', { title: 'Question', question, answers, csrfToken: req.csrfToken() },)
 }));
 
-
+router.post('/question/:id(\\d+)/answers', asyncHandler(async (req, res, next) => {
+  const questionId = parseInt(req.params.id, 10)
+  console.log(questionId)
+}))
 
 
 

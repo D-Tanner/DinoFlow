@@ -27,3 +27,7 @@ button {
 .answers_section {
   margin-left: 80px;
 }
+
+#votes {
+  margin-left: 0;
+}

@@ -6,7 +6,7 @@ append head
   //- add page specific styles by appending to the head
   link(rel="stylesheet" href="/stylesheets/question-page.css")
   //- add page specific js
-  script(src="/javascripts/index.js" type="module" defer)
+  script(src="/javascripts/questions.js" type="module" defer)
 
 block content
   div(class="container")
@@ -15,19 +15,19 @@ block content
       hr
       div(class="question_content")
         p= question.content
-
-      div(class="votes") Votes
       h2 Answers
-      div(class="answers_section")
-        each answer in answers
-          div
-              div= answer.dataValues.content
-        h2 Your Answer
-        form(id='answer_to_question')
-          input(type='hidden' name='_csrf' value=csrfToken)
-          +field('', 'answer', 'Write your answer here', 'textarea', null, id)
-          div
-            button(type='submit' id="answer_button") Answer this Question
-            a(href='/') Cancel
+      each answer in answers
+        div(id="votes") Votes
+        div(class="answers_section")
+          div= answer.dataValues.content
+
+      h2 Your Answer
+      form(id='answer_to_question')
+        input(type='hidden' name='_csrf' value=csrfToken)
+        input(type='hidden' name='questionId' value=question.id)
+        +field('', 'answer', 'Write your answer here', 'textarea', null, id)
+        div
+          button(type='submit' id="answer_button") Answer this Question
+          a(href='/') Cancel
 
 //- if a user is logged in, they should see the form prompt
