@@ -6,16 +6,18 @@ append head
   link(rel="stylesheet" href="/stylesheets/login-page.css")
 
 block content
-    div(id="container")
-        +validationErrorSummary(errors)
-        div(id="form_block" name="form_block" )
+    +validationErrorSummary(errors)
+    div(class="body")
+        div(class="body_content")
+            h1 Login
             form(id="form" action='/users/login' method='post')
                 input(type='hidden' name='_csrf' value=csrfToken)
-                +field(null, 'email', email , 'E-mail', 'E-mail')
-                    //- be careful of the 3rd argument in line 9 (supposed to be user.email)
+                +field(null, 'email', email , 'email', 'Email', 'email')
+                        //- be careful of the 3rd argument in line 9 (supposed to be user.email)
                 +field(null, 'password', '', 'password', 'Password', 'password')
                 div
                     button(id='login_button' name='submit' type='submit') Login
-                    a(id="login_cancel" href='/') Cancel
-                div Don't have an account?
-                    p: a(id='signup_link' href='/users/register') Sign up
+                    div(id="cancel_button-space")
+                        a(id="cancel_button" href='/') Cancel
+                div
+                    p: a(id='signup_link' href='/users/register') Don't have an account?
