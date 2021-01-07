@@ -8,9 +8,13 @@ append head
   //- add page specific js
   script(src="/javascripts/questions.js" type="module" defer)
 
+append questionButton
+   div#ask-question-container
+          a#ask-question-button(href='/ask-question') Ask Question
+
 block content
   div(class="container")
-    div(class="content")
+    div(class="page_content")
       div(class="question_content")
         h1(id="title")= question.title
         hr
