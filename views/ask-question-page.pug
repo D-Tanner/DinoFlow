@@ -4,16 +4,18 @@ include utils.pug
 
 append head
   //- add page specific styles by appending to the head
-  link(rel="stylesheet" href="/stylesheets/index.css")
+  link(rel="stylesheet" href="/stylesheets/ask-question-page.css")
   //- add page specific js
   script(src="/javascripts/index.js" type="module" defer)
 
 block content
   +validationErrorSummary(errors)
-  form(action='/ask-question' method='post')
-    input(type='hidden' name='_csrf' value=csrfToken)
-    +field('Title', 'title', 'ex: Is this pterodactyl safe to eat?', 'text', null, 'question_title')
-    +field('Content', 'content', 'ex: I found this dead in the woods but it looks bony, I am hungry.', 'textarea', 'question_content')
-    div
-      button(type='submit') Ask a Question
-      a(href='/') Cancel
+  div(class="body")
+    div(class="question_form_content")
+      form(action='/ask-question' method='post' id="ask-question-page")
+        input(type='hidden' name='_csrf' value=csrfToken)
+        +field('Title', 'title', 'ex: Is this pterodactyl safe to eat?', 'text', null, 'question_title')
+        +field('Content', 'content', 'ex: I found this dead in the woods but it looks bony, I am hungry.', 'textarea', null, 'question_content')
+  div(class="buttons")
+    button(type='submit' id='post_a_question') Post Your Question
+    a(href='/' id="cancel") Cancel
