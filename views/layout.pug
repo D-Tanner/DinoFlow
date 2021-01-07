@@ -35,7 +35,7 @@ html
         div.userButtons
           if locals.authenticated
             form(action="/users/logout", method="post")
-              button#logout-button(type="submit") Logout76
+              button#logout-button(type="submit") Logout
           else
             a#login-button(href='/users/login') Login
             a#register-button(href='/users/register') Register
