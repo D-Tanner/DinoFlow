@@ -29,14 +29,14 @@ html
         div.mainButtons
           a#home-button(href='/') Home
         div.searchContainer
-          form#search(action='/search' method='GET')
-            input(name='term' value='' type='text' placeholder='Search...')
+          form(action='/search' method='GET')
+            input#search(name='term' value='' type='text' placeholder='Search...')
         div.userButtons
           if locals.authenticated
             form(action="/users/logout", method="post")
               button#logout-button(type="submit") Logout
           else
             a#login-button(href='/users/login') Login
-            a#register-button(href='/users/register') Register        
+            a#register-button(href='/users/register') Register
     main.content
       block content

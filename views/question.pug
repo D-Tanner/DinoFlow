@@ -27,14 +27,14 @@ block content
               svg(width="36" height="36" viewBox="0 0 36 36")
                 path(d="M2 10h32L18 26 2 10z")
           div(class="single_answers")= answer.dataValues.content
-
-      h2 Your Answer
-      form(id='answer_to_question')
-        input(type='hidden' name='_csrf' value=csrfToken)
-        input(type='hidden' name='questionId' value=question.id)
-        +field('', 'answer', 'Write your answer here', 'textarea', null, id)
-        div
-          button(type='submit' id="answer_button") Answer this Question
-          a(href='/') Cancel
+      if locals.authenticated
+        h2 Your Answer
+        form(id='answer_to_question')
+          input(type='hidden' name='_csrf' value=csrfToken)
+          input(type='hidden' name='questionId' value=question.id)
+          +field('', 'answer', 'Write your answer here', 'textarea', null, id)
+          div
+            button(type='submit' id="answer_button") Answer this Question
+            a(href='/') Cancel
 
 //- if a user is logged in, they should see the form prompt
