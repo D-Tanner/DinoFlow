@@ -1,0 +1,10 @@
+extends layout
+
+include utils.pug
+
+block content
+    div
+        ul
+            each question in questions
+               li
+                a(href=`/question/${question.id}`)= question.title
