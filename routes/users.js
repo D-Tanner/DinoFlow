@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { Op } = require('sequelize');
 const bcrypt = require('bcryptjs');// Hashing passwords
 
 const { check, validationResult } = require('express-validator')
@@ -13,9 +14,17 @@ const { User } = db
 const userValidators = [
   check('username')
     .exists({ checkFalsy: true })
-    .withMessage("Please provide a dinosaur name; you're a dinosaur, aren't you?")
+    .withMessage("Please provide a dinosaur username.")
     .isLength({ max: 50 })
-    .withMessage("Dinosaur name must be no more than 50 characters long."),
+    .withMessage("Dinosaur name must be no more than 50 characters long.")
+    .custom((value) => {
+      return User.findOne({ where: { username: { [Op.iLike]: value } } })
+        .then((user) => {
+          if (user) {
+            return Promise.reject('The provided username is already in use by another account')
+          }
+        })
+    }),
   check('email')
     .exists({ checkFalsy: true })
     .withMessage('Please provide a valid e-mail address.')
@@ -24,7 +33,7 @@ const userValidators = [
     .isEmail()
     .withMessage('E-mail address is not a valid email')
     .custom((value) => {
-      return User.findOne({ where: { email: value } })
+      return User.findOne({ where: { email: { [Op.iLike]: value } } })
         .then((user) => {
           if (user) {
             return Promise.reject('The provided e-mail address is already in use by another account');
@@ -120,7 +129,7 @@ router.post('/login', csrfProtection, loginValidators, asyncHandler(async (req, 
 
     if (user !== null) {
       const passwordMatch = await bcrypt.compare(password, user.hashedPassword.toString());
-      
+
       if (passwordMatch) {
         loginUser(req, res, user);
         return req.session.save(err => {
