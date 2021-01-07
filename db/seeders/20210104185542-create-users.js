@@ -6,7 +6,7 @@ const bcrypt = require('bcryptjs')
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     const users = [];
-    for (let i = 1; i < 10; i++) {
+    for (let i = 1; i < 60; i++) {
       let newUser = {
         username: faker.internet.userName(),
         email: faker.internet.email(),

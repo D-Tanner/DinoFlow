@@ -6,15 +6,16 @@ html
         link(rel='stylesheet' href='/stylesheets/reset.css')
         link(rel='stylesheet' href='/stylesheets/navbar.css')
   body
-    header
+    header.navbar__container
       nav
         div.mainButtons
           a#home-button(href='/') Home
-          a#questions-button(href='/questions') Questions
+          //- a#questions-button(href='/questions') Questions
         div.searchContainer
           form#search(action='/search' method='GET')
             input(name='term' value='' type='text' placeholder='Search...')
         div.userButtons
           a#login-button(href='/users/login') Login
           a#register-button(href='/users/register') Register
-    block content
+    main.content
+      block content

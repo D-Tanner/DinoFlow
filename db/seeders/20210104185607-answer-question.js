@@ -5,7 +5,7 @@ const faker = require('faker')
 module.exports = {
   up: (queryInterface, Sequelize) => {
     const answers = []
-    for (let i = 1; i < 10; i++) {
+    for (let i = 1; i < 60; i++) {
       let newAnswer = {
         content: faker.lorem.paragraph(),
         userId: i,
