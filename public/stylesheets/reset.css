@@ -26,39 +26,6 @@ h1 {
   font-size: 2rem;
 }
 
-#container {
-  background-color: #eff0f1;
-  height: 100vh;
-  padding-top: 20px;
-}
-
-#form_block{
-  background-color: #ffffff;
-  width: 22rem;
-  border-radius: 10px;
-}
-
-#login_form div{
-  margin: 10% 10%;
-}
-
-#login_button{
-  background-color: #0095ff;
-  color: #ffffff;
-  width: 80%;
-}
-
-#login_cancel{
-  display: block;
-}
-
-#form{
-  margin: 0 auto;
-}
-
-#signup_link{
-  color: #0095ff;
-}
 
 .alert{
   box-sizing: border-box;
