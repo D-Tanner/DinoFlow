@@ -31,7 +31,7 @@ const userValidators = [
     .isLength({ max: 255 })
     .withMessage('E-mail address must not be more than 255 characters long.')
     .isEmail()
-    .withMessage('E-mail address is not a valid email')
+    .withMessage('E-mail address is not a valid e-mail')
     .custom((value) => {
       return User.findOne({ where: { email: { [Op.iLike]: value } } })
         .then((user) => {
@@ -49,12 +49,12 @@ const userValidators = [
     .withMessage('Password must contain at least 1 lowercase letter, uppercase letter, number, and special character (i.e. "!@#$%^&*")'),
   check('confirmPassword')
     .exists({ checkFalsy: true })
-    .withMessage('Please provide a value for Confirm Password')
+    .withMessage('Please confirm your password')
     .isLength({ max: 50 })
     .withMessage('Confirm Password must not be more than 50 characters long')
     .custom((value, { req }) => {
       if (value !== req.body.password) {
-        throw new Error('Confirm Password does not match Password');
+        throw new Error('Password confirmation does not match password');
       }
       return true;
     }),
