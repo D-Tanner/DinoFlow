@@ -1,0 +1,30 @@
+.content {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+li {
+    padding: 15px;
+    list-style-type: none;
+    border: 1px solid black;
+    border-radius: 0.5em;
+    padding: 25px 15px 25px 15px;
+    color: #0077cc;
+    background-color: #fdf7e3;
+    margin: 20px 0px 20px 0px;
+}
+
+li:hover {
+    box-shadow: -0.5px 0.5px 3px rgb(143, 162, 168);
+    transition-duration: 0.2s;
+}
+
+a {
+    text-decoration: none;
+}
+
+.list {
+    margin: 0 auto;
+}
