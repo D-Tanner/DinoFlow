@@ -14,24 +14,29 @@ nav {
     opacity: 100%;
 }
 
-.logo{
+/* .logo{
     float: left;
-}
-
-.mainButtons > a {
-    float: left;
-    display: block;
-    color: gray;
-    text-align: center;
-    padding: 15px;
-    text-decoration: none;
-}
-
-#home-button {
     transition-duration: 0.2s;
 }
 
-#home-button:hover {
+.logo:hover {
+    background-color: rgb(253, 212, 136);
+} */
+.mainButtons > a {
+    vertical-align: middle;
+    float: left;
+    color: gray;
+    text-align: center;
+    padding: 0;
+    text-decoration: none;
+    transition-duration: 0.2s;
+    width: 4rem;
+    height: 41px;
+    border-radius: 15px;
+    margin: 0.25rem 0.25rem 0 0.25rem;
+}
+
+.mainButtons > a:hover {
     background-color: rgb(253, 212, 136);
 }
 
@@ -48,7 +53,6 @@ nav {
     align-items: center;
     float: left;
     padding: 5px;
-
 }
 
 .userButtons {
@@ -113,12 +117,10 @@ nav {
 }
 
 #search {
-    width: 200px;
+    min-width: 20rem;
     height: 40px;
-    transition: width .35s ease-in-out;
 }
 
 #search:focus {
-    width: 300px;
     outline-color:rgb(137, 193, 245);
 }

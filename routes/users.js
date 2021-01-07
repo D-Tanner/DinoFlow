@@ -49,12 +49,12 @@ const userValidators = [
     .withMessage('Password must contain at least 1 lowercase letter, uppercase letter, number, and special character (i.e. "!@#$%^&*")'),
   check('confirmPassword')
     .exists({ checkFalsy: true })
-    .withMessage('Please provide a value for Confirm Password')
+    .withMessage('Please confirm your password')
     .isLength({ max: 50 })
     .withMessage('Confirm Password must not be more than 50 characters long')
     .custom((value, { req }) => {
       if (value !== req.body.password) {
-        throw new Error('Confirm Password does not match Password');
+        throw new Error('Password confirmation does not match password');
       }
       return true;
     }),

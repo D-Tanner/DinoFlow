@@ -24,14 +24,15 @@ button {
   margin-right: 20px;
 }
 
-/* .answers_section {
-
-} */
+.answers_section {
+  display: flex;
+  align-items: center;
+}
 
 .single_answers {
 
   padding-bottom: 15px;
-  margin-left: 100px;
+  margin-left: 20px;
 }
 
 .votes {
