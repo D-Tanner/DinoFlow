@@ -2,16 +2,26 @@ extends layout
 
 include utils.pug
 
+append head
+  //- add page specific styles by appending to the head
+  link(rel="stylesheet" href="/stylesheets/register-page.css")
+  //- add page specific js
+  script(src="/javascripts/index.js" type="module" defer)
+
 block content
   +validationErrorSummary(errors)
-  form(action='/users/register' method='post')
-    input(type='hidden' name='_csrf' value=csrfToken)
-    +field('Dinosaur', 'username', user.username)
-    +field('Email Address', 'email', user.email)
-    +field('Password', 'password', '', 'password')
-    +field('Confirm Password', 'confirmPassword', '', 'password')
-    div
-      button(type='submit') Register
-      a(href='/') Cancel
-  div
-    p: a(href='/users/login') Already a dinosaur?
+  div(class="body")
+    div(class="body_content")
+      h1 Create an account
+      form(action='/users/register' method='post')
+        input(type='hidden' name='_csrf' value=csrfToken)
+        +field('', 'dinosaur', user.username, 'text', 'Dinosaur', 'username')
+        +field('', 'Email', user.email, 'email', 'Email', 'email')
+        +field('', 'password', '', 'password', 'Password', 'password')
+        +field('', 'confirmPassword', '', 'password', 'Confirm Password', 'confirm')
+        div
+          button(type='submit' id="register_button") Register
+          div(id="cancel_button-space")
+            a(href='/' id="cancel_button") Cancel
+      div
+        p: a(href='/users/login') Already a dinosaur?
