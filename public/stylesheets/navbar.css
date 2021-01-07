@@ -16,6 +16,11 @@ nav {
 
 .logo{
     float: left;
+    transition-duration: 0.2s;
+}
+
+.logo:hover {
+    background-color: rgb(253, 212, 136);
 }
 
 .mainButtons > a {

@@ -31,7 +31,7 @@ const userValidators = [
     .isLength({ max: 255 })
     .withMessage('E-mail address must not be more than 255 characters long.')
     .isEmail()
-    .withMessage('E-mail address is not a valid e-mail')
+    .withMessage('E-mail address provided is not a valid email')
     .custom((value) => {
       return User.findOne({ where: { email: { [Op.iLike]: value } } })
         .then((user) => {
