@@ -38,4 +38,18 @@ button {
   margin-left: 0;
   float: left;
   text-align: center;
+  width: 5rem;
+}
+
+.button_votes{
+  display: block;
+  width: 100%;
+  margin: 5px 0;
+  background: none;
+  border: none;
+}
+
+.vote_count{
+  width: 100%;
+  text-align: center;
 }
