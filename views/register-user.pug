@@ -15,8 +15,8 @@ block content
       h1 Create an account
       form(action='/users/register' method='post')
         input(type='hidden' name='_csrf' value=csrfToken)
-        +field('', 'dinosaur', user.username, 'text', 'Dinosaur', 'username')
-        +field('', 'Email', user.email, 'email', 'Email', 'email')
+        +field('', 'username', user.username, 'text', 'Dinosaur', 'username')
+        +field('', 'email', user.email, 'email', 'Email', 'email')
         +field('', 'password', '', 'password', 'Password', 'password')
         +field('', 'confirmPassword', '', 'password', 'Confirm Password', 'confirm')
         div
