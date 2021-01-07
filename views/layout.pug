@@ -35,11 +35,10 @@ html
         div.userButtons
           if locals.authenticated
             form(action="/users/logout", method="post")
-              button#logout-button(type="submit") Logout
+              button#logout-button(type="submit") Logout76
           else
             a#login-button(href='/users/login') Login
             a#register-button(href='/users/register') Register
     main.content
-        div#ask-question-container
-          a#ask-question-button(href='/ask-question') Ask Question
+    block questionButton
     block content
