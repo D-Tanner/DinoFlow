@@ -4,11 +4,7 @@ const csrf = require('csurf')
 const { Question, Answer } = require('../db/models')
 const { check, validationResult } = require('express-validator');
 const db = require('../db/models');
-
-const csrfProtection = csrf({ cookie: true })
-
-const asyncHandler = (handler) => (req, res, next) => handler(req, res, next).catch(next);
-
+const { csrfProtection, asyncHandler } = require('./utils')
 
 /* GET users listing. */
 router.get('/ask-question', csrfProtection, asyncHandler(async (req, res, next) => {
@@ -55,8 +51,26 @@ router.post('/ask-question', csrfProtection, questionValidators, asyncHandler(as
 
 router.get('/question/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => {
   const questionId = parseInt(req.params.id, 10)
-  const question = await Question.findByPk(questionId, { include: ['Answers'] })
+  const question = await Question.findByPk(questionId, { include: [{model: Answer, include: ['Votes']}] })
   //const answers = await Answer.findAll({ where: questionId })
+
+  for (let answer of question.Answers){
+    answer.dataValues.Votes = answer.Votes.reduce((acc, vote) => {
+      if (vote.isUpvote) {
+        return ++acc;
+      }
+      return --acc;
+    }, 0)
+  }
+
+  console.log(question.Answers.map(answer => answer.toJSON()));
+  // console.log(question.Answers.map(answer => answer.Votes.reduce((acc, vote) =>{
+  //   if(vote.isUpvote){
+  //     return ++acc;
+  //   }
+  //   return --acc;
+  // },0)));
+
   res.render('question', { title: 'Question', question, answers: question.Answers, csrfToken: req.csrfToken() },)
 }));
 

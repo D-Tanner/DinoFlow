@@ -47,7 +47,45 @@ window.addEventListener("load", (event) => {
   const upVote = document.querySelector('#upVote')
   const downVote = document.querySelector('#downVote')
 
-  upVote.addEventListener('click', e => {
+  upVote.addEventListener('click', async e => {
+
+    e.preventDefault();
+    const formData = new FormData(form)
+    const content = formData.get("vote")
+    const questionId = formData.get("questionId")
+    const answerId = formData.get("answerId")
+    const body = { content, questionId, answerId }
+
+    console.log(formData)
+
+    const response = await fetch(`http://localhost:8000/answers/${answerId}/votes`, {
+      method: "POST",
+      body: JSON.stringify(body),
+      headers: {
+        "Content-Type": "application/json",
+      }
+    });
+
+    console.log(response.json())
+
+    // const answer = await response.json()
+    // let answerSection = document.querySelector(".answers_section")
+    // let newAnswer = document.createElement('div')
+    // let newVote = document.createElement('div')
+
+    // newAnswer.setAttribute('class', 'single_answers')
+    // newVote.setAttribute('class', 'votes')
+
+    // newAnswer.innerHTML = answer.content
+    // newVote.innerHTML = 'Votes'
+
+    // // answerSection += answerSection.appendChild(newAnswer)
+    // answerSection.appendChild(newVote)
+    // answerSection.appendChild(newAnswer)
+
+
+    e.stopImmediatePropagation()
+
 
     /*Steps 
     1.)Check if 
@@ -61,14 +99,14 @@ window.addEventListener("load", (event) => {
     Notes: Table has downvotes and upvotes to be returns
     */
 
-    //check if user is logged in
-    if (local) {
-      const formData = new Form
+    // //check if user is logged in
+    // if (local) {
+    //   const formData = new Form
 
-    }
-    // if not--send an alert
-    window.alert("Please Log In to vote")
-    res.redirect('/users/login')
+    // }
+    // // if not--send an alert
+    // window.alert("Please Log In to vote")
+    // res.redirect('/users/login')
 
   })
   downVote.addEventListener('click', e => [
