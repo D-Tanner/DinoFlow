@@ -6,7 +6,7 @@ html
         link(rel='stylesheet' href='/stylesheets/reset.css')
         link(rel='stylesheet' href='/stylesheets/navbar.css')
   body
-    header
+    header.navbar__container
       nav
         .logo
           svg(xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40pt" height="auto" viewBox="0 0 375 375" version="1.2")
@@ -29,7 +29,6 @@ html
             path(style=" stroke:none;fill-rule:nonzero;fill:rgb(13.729858%,30.979919%,14.509583%);fill-opacity:1;" d="M 324.011719 114.417969 C 324.011719 114.417969 302.558594 114.785156 295.609375 120.890625 ")
         div.mainButtons
           a#home-button(href='/') Home
-          a#questions-button(href='/questions') Questions
         div.searchContainer
           form#search(action='/search' method='GET')
             input(name='term' value='' type='text' placeholder='Search...')
@@ -39,5 +38,6 @@ html
               button#logout-button(type="submit") Logout
           else
             a#login-button(href='/users/login') Login
-            a#register-button(href='/users/register') Register
-    block content
+            a#register-button(href='/users/register') Register        
+    main.content
+      block content
