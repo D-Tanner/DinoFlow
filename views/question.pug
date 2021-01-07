@@ -11,9 +11,9 @@ append head
 block content
   div(class="container")
     div(class="content")
-      h1(id="title")= question.title
-      hr
       div(class="question_content")
+        h1(id="title")= question.title
+        hr
         p= question.content
       h2 Answers
       each answer in answers
