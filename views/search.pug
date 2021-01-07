@@ -7,6 +7,9 @@ append head
   link(rel="stylesheet" href="/stylesheets/search-and-home.css")
   //- add page specific js
 //-   script(src="/javascripts/index.js" type="module" defer)
+append questionButton
+ div#ask-question-container
+    a#ask-question-button(href='/ask-question') Ask Question
 
 block content
     div(class="content")
