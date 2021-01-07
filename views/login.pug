@@ -3,18 +3,17 @@ extends layout.pug
 include utils.pug
 
 block content
-    +validationErrorSummary(errors)
     div(id="container")
+        +validationErrorSummary(errors)
         center
             div(id="form_block" name="form_block" )
-                center
-                    form(id="form" action='/users/login' method='post')
-                        input(type='hidden' name='_csrf' value=csrfToken)
-                        +field('E-mail Address', 'email', user.email , 'E-mail', 'email')
-                        //- be careful of the 3rd argument in line 9 (supposed to be user.email)
-                        +field('Password', 'password', '', 'password', 'Password', 'password')
-                        div
-                            button(id='login_button' name='submit' type='submit') Login
-                            a(id="login_cancel" href='/') Cancel
-                    div Don't have an account?
-                        p: a(id='signup_link' href='/users/register') Sign up
+                form(id="form" action='/users/login' method='post')
+                    input(type='hidden' name='_csrf' value=csrfToken)
+                    +field('E-mail Address', 'email', email , 'E-mail', 'email')
+                    //- be careful of the 3rd argument in line 9 (supposed to be user.email)
+                    +field('Password', 'password', '', 'password', 'Password', 'password')
+                    div
+                        button(id='login_button' name='submit' type='submit') Login
+                        a(id="login_cancel" href='/') Cancel
+                div Don't have an account?
+                    p: a(id='signup_link' href='/users/register') Sign up

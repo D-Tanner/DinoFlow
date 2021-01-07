@@ -14,6 +14,10 @@ nav {
     opacity: 100%;
 }
 
+.logo{
+    float: left;
+}
+
 .mainButtons > a {
     float: left;
     display: block;
@@ -82,6 +86,23 @@ nav {
 }
 
 #register-button:hover {
+    background-color: rgb(137, 193, 245);
+}
+
+#logout-button{
+    float: right;
+    margin: 3px;
+    color: white;
+    background-color: #0077cc;
+    border-color: #0077cc;
+    border-radius: 5px;
+    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.4);
+    transition-duration: 0.2s;
+    width: 65px;
+    height: 45px;
+}
+
+#logout-button:hover {
     background-color: rgb(137, 193, 245);
 }
 
