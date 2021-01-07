@@ -6,6 +6,10 @@ nav {
     top: 0;
 }
 
+.logo{
+    float: left;
+}
+
 .mainButtons > a {
     float: left;
     display: block;
