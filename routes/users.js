@@ -76,7 +76,14 @@ router.post('/register', csrfProtection, userValidators, asyncHandler(async (req
     user.hashedPassword = hashedPassword;
     await user.save();
     loginUser(req, res, user);
-    res.redirect('/'); // localhost:8080/
+    return req.session.save(err => {
+      if (err) {
+        next(err)
+      } else {
+        // Redirect
+        return res.redirect('/');
+      }
+    })
   } else {
     const errors = validatorErrors.array().map((error) => error.msg);
     res.render('register-user', {
