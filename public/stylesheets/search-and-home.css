@@ -31,3 +31,10 @@ a {
     width: 80%;
     margin: 0 auto;
 }
+
+#user_info {
+    font-size: 15px;
+    color: #3c4146;
+    margin: 10px 0px 0px 80%;
+    overflow: auto;
+}
