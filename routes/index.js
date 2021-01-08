@@ -1,10 +1,12 @@
-var express = require('express');
-var router = express.Router();
-
+const express = require('express');
+const router = express.Router();
+const { Question } = require('../db/models')
+const { asyncHandler } = require('./utils')
 /* GET home page. */
-router.get('/', function (req, res, next) {
-  res.render('index', { title: 'a/A Express Skeleton Home' });
-});
+router.get('/', asyncHandler(async (req, res, next) => {
+  const questions = await Question.findAll()
+  res.render('home-page', { title: 'Questions', questions });
+}));
 
 
 module.exports = router;

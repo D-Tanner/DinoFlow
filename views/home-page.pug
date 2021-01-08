@@ -8,12 +8,11 @@ append head
   //- add page specific js
 //-   script(src="/javascripts/index.js" type="module" defer)
 append questionButton
- div#ask-question-container
-    a#ask-question-button(href='/ask-question') Ask Question
-
+   div#ask-question-container
+          a#ask-question-button(href='/ask-question') Ask Question
 block content
-    div(class="content")
+    div(class="page_content")
         ul.list
             each question in questions
                li
-                a(href=`/question/${question.id}`)= question.title
+                  a(href=`/question/${question.id}`)= question.title

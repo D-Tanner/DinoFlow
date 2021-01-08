@@ -1,7 +1,6 @@
-.content {
+.page_content {
   padding: 24px;
   max-width: 1100px;
-  padding-top: 100px;
   margin: 0 auto;
 }
 
@@ -24,14 +23,16 @@ button {
   margin-right: 20px;
 }
 
-/* .answers_section {
-
-} */
+.answers_section {
+  display: flex;
+  align-items: center;
+}
+/*appending answers not working yet*/
 
 .single_answers {
 
   padding-bottom: 15px;
-  margin-left: 100px;
+  margin-left: 20px;
 }
 
 .votes {

@@ -8,13 +8,18 @@ append head
   //- add page specific js
   script(src="/javascripts/questions.js" type="module" defer)
 
+append questionButton
+   div#ask-question-container
+          a#ask-question-button(href='/ask-question') Ask Question
+
 block content
   div(class="container")
-    div(class="content")
+    div(class="page_content")
       div(class="question_content")
         h1(id="title")= question.title
         hr
         p= question.content
+          //- p
       h2 Answers
       each answer in answers
         div(class="answers_section")
@@ -28,13 +33,14 @@ block content
                 path(d="M2 10h32L18 26 2 10z")
           div(class="single_answers") #{answer.dataValues.content} Answer  
       if locals.authenticated
+        +validationErrorSummary(errors)
         h2 Your Answer
         form(id='answer_to_question')
           input(type='hidden' name='_csrf' value=csrfToken)
           input(type='hidden' name='questionId' value=question.id)
-          +field('', 'answer', 'Write your answer here', 'textarea', null, id)
+          +field('', 'answer', answer, 'textarea', 'Write your answer here', id)
           div
             button(type='submit' id="answer_button") Answer this Question
             a(href='/') Cancel
 
-//- if a user is logged in, they should see the form prompt
+//- Should the field value be answer?

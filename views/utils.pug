@@ -3,7 +3,7 @@ mixin field(labelText, fieldName, fieldValue, fieldType = 'text', placeholder = 
     label(for=fieldName)= labelText
     div
       if fieldType === 'textarea'
-        textarea(id=fieldname name=fieldName rows='5')= fieldValue
+        textarea(id=id name=fieldName rows='5')= fieldValue
       else
         input(type=fieldType name=fieldName value=fieldValue placeholder=placeholder id=id)
 
