@@ -51,10 +51,10 @@ router.post('/ask-question', csrfProtection, questionValidators, asyncHandler(as
 
 router.get('/question/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => {
   const questionId = parseInt(req.params.id, 10)
-  const question = await Question.findByPk(questionId, { include: [{model: Answer, include: ['Votes']}] })
+  const question = await Question.findByPk(questionId, { include: [{ model: Answer, include: ['Votes'] }] })
   //const answers = await Answer.findAll({ where: questionId })
 
-  for (let answer of question.Answers){
+  for (let answer of question.Answers) {
     answer.dataValues.Votes = answer.Votes.reduce((acc, vote) => {
       if (vote.isUpvote) {
         return ++acc;
@@ -76,6 +76,8 @@ router.get('/question/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, 
 
 //!csrf messes up with 403 error
 //TODO re-add , csrfProtection
+
+
 router.post('/question/:id(\\d+)/answers', answerValidators, asyncHandler(async (req, res, next) => {
   const questionId = parseInt(req.params.id, 10)
   console.log(questionId)

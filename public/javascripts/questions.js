@@ -35,29 +35,19 @@ window.addEventListener("load", (event) => {
 
 
     e.stopImmediatePropagation()
-
-
-    //When we hit the submit button, make a post fetch request with new answer
-
-    //load in the new answer
-
-    //create a new answer div and add it in question.pug file by appending the child to class="answers_section"
   })
 
   const upVote = document.querySelector('#upVote')
   const downVote = document.querySelector('#downVote')
 
   upVote.addEventListener('click', async e => {
-
     e.preventDefault();
     const formData = new FormData(form)
-    const content = formData.get("vote")
-    const questionId = formData.get("questionId")
-    const answerId = formData.get("answerId")
-    const body = { content, questionId, answerId }
+    const isUpvote = true
+    const body = { isUpvote }
 
-    console.log(formData)
-
+    const answerId = e.currentTarget.dataset.answerid
+    console.log(e.currentTarget)
     const response = await fetch(`http://localhost:8000/answers/${answerId}/votes`, {
       method: "POST",
       body: JSON.stringify(body),
@@ -65,51 +55,45 @@ window.addEventListener("load", (event) => {
         "Content-Type": "application/json",
       }
     });
+    const result = await response.json()
 
-    console.log(response.json())
+    const trueBoolean = result.isUpvote
 
-    // const answer = await response.json()
-    // let answerSection = document.querySelector(".answers_section")
-    // let newAnswer = document.createElement('div')
-    // let newVote = document.createElement('div')
-
-    // newAnswer.setAttribute('class', 'single_answers')
-    // newVote.setAttribute('class', 'votes')
-
-    // newAnswer.innerHTML = answer.content
-    // newVote.innerHTML = 'Votes'
-
-    // // answerSection += answerSection.appendChild(newAnswer)
-    // answerSection.appendChild(newVote)
-    // answerSection.appendChild(newAnswer)
-
-
+    if (trueBoolean) {
+      //if it goes there reflect change on count
+      let spanNumber = document.querySelector('.vote_count')
+      const total = parseInt(spanNumber.innerHTML) + 1
+      spanNumber.innerHTML = total
+    }
     e.stopImmediatePropagation()
-
-
-    /*Steps 
-    1.)Check if 
-    1.)Create form
-    2.)grab id for answers
-    3.)grab the body and covert to json
-
-    4.)Create a variable for count
-    5.)Create a function to lookup Table count div to return overall count
-
-    Notes: Table has downvotes and upvotes to be returns
-    */
-
-    // //check if user is logged in
-    // if (local) {
-    //   const formData = new Form
-
-    // }
-    // // if not--send an alert
-    // window.alert("Please Log In to vote")
-    // res.redirect('/users/login')
-
   })
-  downVote.addEventListener('click', e => [
+  downVote.addEventListener('click', async e => {
+    e.preventDefault();
+    const formData = new FormData(form)
+    const isUpvote = false
+    const body = { isUpvote }
 
-  ])
+    const answerId = e.currentTarget.dataset.ansid
+    console.log(e.currentTarget)
+    const response = await fetch(`http://localhost:8000/answers/${answerId}/votes`, {
+      method: "POST",
+      body: JSON.stringify(body),
+      headers: {
+        "Content-Type": "application/json",
+      }
+    });
+    const result = await response.json()
+
+    //TODO Change the Vote Model to check if the user/answer validation id exists so there polymorphic voting
+    const falseBoolean = result.isUpvote
+
+    if (!falseBoolean) {
+      //if it goes there reflect change on count
+      let spanNumber = document.querySelector('.vote_count')
+      const total = parseInt(spanNumber.innerHTML) - 1
+      spanNumber.innerHTML = total
+    }
+    e.stopImmediatePropagation()
+  })
 })
+
