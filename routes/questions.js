@@ -93,10 +93,6 @@ router.post('/question/:id(\\d+)/answers', answerValidators, asyncHandler(async 
         content,
         questionId,
         userId: req.session.auth.userId
-<<<<<<< HEAD
-        //?Add auth
-=======
->>>>>>> main
       }
     )
     return res.json(ans)
