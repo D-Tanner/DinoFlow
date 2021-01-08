@@ -1,11 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const csrf = require('csurf')
-const { Question, Answer, Vote } = require('../db/models')
+const { Vote } = require('../db/models')
 const db = require('../db/models');
 const { csrfProtection, asyncHandler } = require('./utils');
-
-
 
 router.post("/answers/:id(\\d+)/votes", asyncHandler(async (req, res) => {
     const userId = res.locals.user.id;
@@ -14,16 +12,21 @@ router.post("/answers/:id(\\d+)/votes", asyncHandler(async (req, res) => {
     const { isUpvote } = req.body
 
     const voteExists = await Vote.findOne({ where: { userId, answerId } });
+    if (voteExists.isUpvote === isUpvote) {
+
+        res.json({ sameVote: true })
+        return
+    }
     console.log(voteExists);
     let updatedVote;
-    if(voteExists){
+    if (voteExists) {
         console.log("in the loop")
         if (!req.body.isUpvote) {
             console.log("changing to false")
-            updatedVote = await voteExists.update({ isUpvote: false } );
+            updatedVote = await voteExists.update({ isUpvote: false });
         } else {
             console.log("changing to true")
-            updatedVote = await voteExists.update({ isUpvote: true } );
+            updatedVote = await voteExists.update({ isUpvote: true });
         }
         console.log(" done with loop", updatedVote)
         return res.json(updatedVote)
@@ -36,6 +39,16 @@ router.post("/answers/:id(\\d+)/votes", asyncHandler(async (req, res) => {
         }
     )
     res.json(voteChange)
+}))
+
+router.get("/answers/:id(\\d+)/votes", asyncHandler(async (req, res) => {
+    const userId = res.locals.user.id;
+    const answerId = parseInt(req.params.id, 10);
+
+    const voteExists = await Vote.findOne({ where: { userId, answerId } });
+    console.log(voteExists);
+
+    res.json(voteExists)
 }))
 
 module.exports = router

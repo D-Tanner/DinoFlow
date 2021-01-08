@@ -48,6 +48,7 @@ window.addEventListener("load", (event) => {
     const answerId = e.currentTarget.dataset.answerid
     console.log(e.currentTarget)
     e.currentTarget.disabled = true;
+
     const response = await fetch(`http://localhost:8000/answers/${answerId}/votes`, {
       method: "POST",
       body: JSON.stringify(body),
@@ -57,8 +58,8 @@ window.addEventListener("load", (event) => {
     });
     const result = await response.json()
 
-    // const trueBoolean = result.isUpvote
-    //if it goes there reflect change on count
+    if (result.sameVote) return
+
     let spanNumber = document.querySelector('.vote_count')
     let total = parseInt(spanNumber.innerHTML)
     if (total == -1) {
@@ -88,8 +89,8 @@ window.addEventListener("load", (event) => {
     });
     const result = await response.json()
 
-    //TODO Change the Vote Model to check if the user/answer validation id exists so there polymorphic voting
-    //if it goes there reflect change on count
+    if (result.sameVote) return
+
     let spanNumber = document.querySelector('.vote_count')
     let total = parseInt(spanNumber.innerHTML)
     if (total == 1) {
