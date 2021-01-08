@@ -12,8 +12,9 @@ append questionButton
     a#ask-question-button(href='/ask-question') Ask Question
 
 block content
-    div(class="content")
+    div(class="page_content")
         ul.list
             each question in questions
                li
                 a(href=`/question/${question.id}`)= question.title
+                p= `Asked by ${question.User.username}`
