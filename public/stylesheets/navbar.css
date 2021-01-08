@@ -12,6 +12,7 @@ nav {
     top: 0px;
     min-width: 550px;
     opacity: 100%;
+    box-shadow: 1px 1px 5px 1px gray;
 }
 
 /* .logo{
