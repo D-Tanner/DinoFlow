@@ -30,16 +30,15 @@ block content
               span(class='vote_count') Votes #{votes_count}
               button(class="button_votes")
                 img.resize(src='../down-filled-triangular-arrow.png')
-            div(class="single_answers")= answer.dataValues.content
+            div(class='single_answers_container')
+              div(class="single_answers")= answer.dataValues.content
       if locals.authenticated
-        +validationErrorSummary(errors)
+        //- +validationErrorSummary(errors)
         h2#yourAnswerHeader Your Answer
         form(id='answer_to_question')
           input(type='hidden' name='_csrf' value=csrfToken)
           input(type='hidden' name='questionId' value=question.id)
-          +field('', 'answer', answer, 'textarea', 'Write your answer here', id)
+          +field('', 'answer', answer, 'textarea', 'Write your answer here')
           div
             button(type='submit' id="answer_button") Post Your Answer
             a(href='/') Cancel
-
-//- Should the field value be answer?

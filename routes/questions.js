@@ -58,7 +58,8 @@ router.get('/question/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, 
   const questionId = parseInt(req.params.id, 10)
   const question = await Question.findByPk(questionId, { include: ['Answers', { model: User, attributes: ['username'] }] })
   //const answers = await Answer.findAll({ where: questionId })
-  // console.log(question.User)
+  console.log(question.User)
+  console.log(question.Answers)
   res.render('question', { title: 'Question', question, answers: question.Answers, csrfToken: req.csrfToken() },)
 }));
 
