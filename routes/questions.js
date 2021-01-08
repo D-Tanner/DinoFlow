@@ -91,9 +91,8 @@ router.post('/question/:id(\\d+)/answers', answerValidators, asyncHandler(async 
       {
         content,
         questionId,
-        // userId: req.session.userId
+        userId: req.session.auth.userId
         //?Add auth
-        userId: 3
       }
     )
     return res.json(ans)

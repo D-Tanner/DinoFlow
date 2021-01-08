@@ -42,12 +42,12 @@ window.addEventListener("load", (event) => {
 
   upVote.addEventListener('click', async e => {
     e.preventDefault();
-    const formData = new FormData(form)
     const isUpvote = true
     const body = { isUpvote }
 
     const answerId = e.currentTarget.dataset.answerid
     console.log(e.currentTarget)
+    e.currentTarget.disabled = true;
     const response = await fetch(`http://localhost:8000/answers/${answerId}/votes`, {
       method: "POST",
       body: JSON.stringify(body),
@@ -57,24 +57,28 @@ window.addEventListener("load", (event) => {
     });
     const result = await response.json()
 
-    const trueBoolean = result.isUpvote
-
-    if (trueBoolean) {
-      //if it goes there reflect change on count
-      let spanNumber = document.querySelector('.vote_count')
-      const total = parseInt(spanNumber.innerHTML) + 1
-      spanNumber.innerHTML = total
+    // const trueBoolean = result.isUpvote
+    //if it goes there reflect change on count
+    let spanNumber = document.querySelector('.vote_count')
+    let total = parseInt(spanNumber.innerHTML)
+    if (total == -1) {
+      total = 1;
+    } else {
+      ++total;
     }
+    spanNumber.innerHTML = total
+    document.querySelector(`[data-ansid="${answerId}"]`).disabled = false;
     e.stopImmediatePropagation()
   })
+
   downVote.addEventListener('click', async e => {
     e.preventDefault();
-    const formData = new FormData(form)
     const isUpvote = false
     const body = { isUpvote }
 
     const answerId = e.currentTarget.dataset.ansid
     console.log(e.currentTarget)
+    e.currentTarget.disabled = true;
     const response = await fetch(`http://localhost:8000/answers/${answerId}/votes`, {
       method: "POST",
       body: JSON.stringify(body),
@@ -85,14 +89,17 @@ window.addEventListener("load", (event) => {
     const result = await response.json()
 
     //TODO Change the Vote Model to check if the user/answer validation id exists so there polymorphic voting
-    const falseBoolean = result.isUpvote
-
-    if (!falseBoolean) {
-      //if it goes there reflect change on count
-      let spanNumber = document.querySelector('.vote_count')
-      const total = parseInt(spanNumber.innerHTML) - 1
-      spanNumber.innerHTML = total
+    //if it goes there reflect change on count
+    let spanNumber = document.querySelector('.vote_count')
+    let total = parseInt(spanNumber.innerHTML)
+    if (total == 1) {
+      total = -1;
+    } else {
+      --total;
     }
+    spanNumber.innerHTML = total
+
+    document.querySelector(`[data-answerid="${answerId}"]`).disabled = false;
     e.stopImmediatePropagation()
   })
 })

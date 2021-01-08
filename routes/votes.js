@@ -8,11 +8,26 @@ const { csrfProtection, asyncHandler } = require('./utils');
 
 
 router.post("/answers/:id(\\d+)/votes", asyncHandler(async (req, res) => {
-    const userId = parseInt(req.params.id, 10)
-    const answerId = parseInt(req.params.id, 10)
+    const userId = res.locals.user.id;
+    const answerId = parseInt(req.params.id, 10);
 
     const { isUpvote } = req.body
 
+    const voteExists = await Vote.findOne({ where: { userId, answerId } });
+    console.log(voteExists);
+    let updatedVote;
+    if(voteExists){
+        console.log("in the loop")
+        if (!req.body.isUpvote) {
+            console.log("changing to false")
+            updatedVote = await voteExists.update({ isUpvote: false } );
+        } else {
+            console.log("changing to true")
+            updatedVote = await voteExists.update({ isUpvote: true } );
+        }
+        console.log(" done with loop", updatedVote)
+        return res.json(updatedVote)
+    }
     const voteChange = await Vote.create(
         {
             userId,
