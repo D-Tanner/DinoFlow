@@ -63,7 +63,7 @@ router.get('/question/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, 
     }, 0)
   }
 
-  console.log(question.Answers.map(answer => answer.toJSON()));
+  // console.log(question.Answers.map(answer => answer.toJSON()));
   // console.log(question.Answers.map(answer => answer.Votes.reduce((acc, vote) =>{
   //   if(vote.isUpvote){
   //     return ++acc;
