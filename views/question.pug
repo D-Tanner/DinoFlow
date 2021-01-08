@@ -19,7 +19,7 @@ block content
         h1(id="title")= question.title
         hr
         p= question.content
-          //- p= users
+          p= question.User.username
       h2 Answers
       each answer in answers
         div(class="answers_section")

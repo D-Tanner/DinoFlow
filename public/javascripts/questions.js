@@ -37,6 +37,15 @@ window.addEventListener("load", (event) => {
     e.stopImmediatePropagation()
 
 
+
+    // 1. don't add a new vote/answer if we dont fill out the form
+    // 2. render errors, if any
+    //    a. lines 22-34 will only happen when we correctly fill out form, else
+    //    b. replicate lines 22-34 for an error element
+    // 3. make new div .answers_container to hold answers_section (up/down buttons as well), append to that new div
+
+
+
     //When we hit the submit button, make a post fetch request with new answer
 
     //load in the new answer
