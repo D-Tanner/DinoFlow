@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const csrf = require('csurf')
-const { Question, Answer } = require('../db/models')
+const { Question, Answer, User } = require('../db/models')
 const { check, validationResult } = require('express-validator');
 const db = require('../db/models');
 
