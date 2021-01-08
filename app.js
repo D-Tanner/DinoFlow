@@ -14,6 +14,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const questionsRouter = require('./routes/questions')
 const searchRouter = require('./routes/search')
+const votesRouter = require('./routes/votes')
 const app = express();
 
 // view engine setup
@@ -45,6 +46,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter); // might need to remove first parameter ('/users') based on ./routes/users:86
 app.use('/', questionsRouter)
 app.use('/', searchRouter)
+app.use('/', votesRouter)
 
 // // catch 404 and forward to error handler
 // app.use(function (req, res, next) {
