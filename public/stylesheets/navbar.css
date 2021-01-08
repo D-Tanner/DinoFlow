@@ -125,3 +125,16 @@ nav {
 #search:focus {
     outline-color:rgb(137, 193, 245);
 }
+
+
+#background_image {
+    background-image: url("https://images-na.ssl-images-amazon.com/images/I/81QxCatsSyL._AC_SL1500_.jpg");
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+    position: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.07;
+}
