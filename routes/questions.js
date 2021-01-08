@@ -48,6 +48,7 @@ router.post('/ask-question', csrfProtection, questionValidators, asyncHandler(as
   res.render('ask-question-page', {
     title: 'Ask a Question',
     errors,
+    question: {},
     csrfToken: req.csrfToken()
   })
 
@@ -75,9 +76,7 @@ router.post('/question/:id(\\d+)/answers', answerValidators, asyncHandler(async 
       {
         content,
         questionId,
-        // userId: req.session.userId
-        //?Add auth
-        userId: 3
+        userId: req.session.auth.userId
       }
     )
     return res.json(ans)

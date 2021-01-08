@@ -19,6 +19,7 @@ block content
         h1(id="title")= question.title
         hr
         p= question.content
+          //- p
       h2 Answers
       each answer in answers
         div(class="answers_section")
@@ -32,6 +33,7 @@ block content
                 path(d="M2 10h32L18 26 2 10z")
           div(class="single_answers")= answer.dataValues.content
       if locals.authenticated
+        +validationErrorSummary(errors)
         h2 Your Answer
         form(id='answer_to_question')
           input(type='hidden' name='_csrf' value=csrfToken)
