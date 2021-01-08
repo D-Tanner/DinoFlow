@@ -26,6 +26,7 @@ button {
 .answers_section {
   display: flex;
   align-items: center;
+  border-top: 1px solid gray;
 }
 /*appending answers not working yet*/
 
@@ -53,4 +54,30 @@ button {
 .vote_count{
   width: 100%;
   text-align: center;
+}
+
+.error_message {
+  color: red;
+  font-weight: bold;
+}
+
+textarea {
+  width: 100%;
+}
+
+#answer_button {
+  background-color: #0095ff;
+  color: white;
+  height: 30px;
+  width: 150px;
+  transition-duration: 0.2s;
+}
+
+#answer_button:hover {
+  background-color:  rgb(137, 193, 245);
+}
+
+.resize {
+  width: 36px;
+  height: 36px;
 }
