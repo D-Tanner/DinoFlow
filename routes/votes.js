@@ -12,16 +12,18 @@ router.post("/answers/:id(\\d+)/votes", asyncHandler(async (req, res) => {
     const { isUpvote } = req.body
 
     const voteExists = await Vote.findOne({ where: { userId, answerId } });
-    if (voteExists.isUpvote === isUpvote) {
-
-        res.json({ sameVote: true })
-        return
-    }
+    
     console.log(voteExists);
+    
     let updatedVote;
     if (voteExists) {
         console.log("in the loop")
-        if (!req.body.isUpvote) {
+        if (voteExists.isUpvote === isUpvote) {
+
+            res.json({ sameVote: true })
+            return
+        }
+        else if (!req.body.isUpvote) {
             console.log("changing to false")
             updatedVote = await voteExists.update({ isUpvote: false });
         } else {
