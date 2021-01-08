@@ -38,7 +38,7 @@ router.post('/ask-question', csrfProtection, questionValidators, asyncHandler(as
 
   if (validatorErrors.isEmpty()) {
     //I need to assign a question ID for each question that is posted ???
-    await Question.create({ title, content, userId: req.session.user.id })
+    await Question.create({ title, content, userId: req.session.auth.userId })
     // const question = await Question.findByPk() // ?????????????
     return res.redirect('/')
   } else {
