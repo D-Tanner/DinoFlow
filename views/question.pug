@@ -36,9 +36,9 @@ block content
         form(id='answer_to_question')
           input(type='hidden' name='_csrf' value=csrfToken)
           input(type='hidden' name='questionId' value=question.id)
-          +field('', 'answer', 'Write your answer here', 'textarea', null, id)
+          +field('', 'answer', answer, 'textarea', 'Write your answer here', id)
           div
             button(type='submit' id="answer_button") Answer this Question
             a(href='/') Cancel
 
-//- if a user is logged in, they should see the form prompt
+//- Should the field value be answer?

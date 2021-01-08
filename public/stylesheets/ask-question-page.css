@@ -14,6 +14,7 @@
 #question_title,
 #question_content {
   width: 90%;
+
 }
 
 #post_a_question {
@@ -74,4 +75,8 @@
   display: flex;
   justify-content: left;
   align-items: center;
+}
+
+.gimme_space {
+  padding-top: 20px;
 }
