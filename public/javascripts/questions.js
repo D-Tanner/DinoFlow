@@ -24,47 +24,64 @@ window.addEventListener("load", (event) => {
 
     const answer = await response.json()
 
+
+
+    //------------------------util-functions-----------------------------//
+    const createNewElement = (ele, attributeType, attribute) => {
+      const newEle = document.createElement(ele)
+      newEle.setAttribute(attributeType, attribute)
+      return newEle
+    }
+
+
+    const createNewVote = () => {
+      const newVoteDiv = createNewElement('div', 'class', 'votes')
+
+      const newUpVote = createNewElement('button', 'class', 'button_votes')
+      const upvoteImg = createNewElement('img', 'class', 'resize')
+      upvoteImg.setAttribute('src', '../triangular-filled-up-arrow.png')
+
+      const newSpan = createNewElement('span', 'class', 'vote_count')
+
+      const newDownVote = createNewElement('button', 'class', 'button_votes')
+      const downvoteImg = createNewElement('img', 'class', 'resize')
+      downvoteImg.setAttribute('src', '../down-filled-triangular-arrow.png')
+
+      newUpVote.appendChild(upvoteImg)
+      newSpan.innerHTML = 'Votes'                                                 // replace this with actual count(?)
+      newDownVote.appendChild(downvoteImg)
+
+      newVoteDiv.appendChild(newUpVote)
+      newVoteDiv.appendChild(newSpan)
+      newVoteDiv.appendChild(newDownVote)
+
+      return newVoteDiv
+    }
+    //-------------------------------------------------------------------------//
+
+
+
     if (content) {
       let answersContainer = document.querySelector(".answers_container")
-      let newAnswerSection = document.createElement('div')
-      let newAnswer = document.createElement('div')
-      let newAnswerContainer = document.createElement('div')
-      let newVote = document.createElement('div')
-      let newUpButton = document.createElement('button')
-      let newDownButton = document.createElement('button')
-      let newUpImg = document.createElement('img')
-      let newDownImg = document.createElement('img')
-      let newVoteCount = document.createElement('span')
-
-      newAnswerContainer.setAttribute('class', 'single_answers_container')
-      newAnswerSection.setAttribute('class', 'answers_section')
-      newAnswer.setAttribute('class', 'single_answers')
-      newVote.setAttribute('class', 'votes')
-      newUpButton.setAttribute('class', 'button_votes')
-      newDownButton.setAttribute('class', 'button_votes')
-      newUpImg.setAttribute('src', '../triangular-filled-up-arrow.png')
-      newUpImg.setAttribute('class', 'resize')
-      newDownImg.setAttribute('src', '../down-filled-triangular-arrow.png')
-      newDownImg.setAttribute('class', 'resize')
+      const newAnswer = createNewElement('div', 'class', 'single_answers')
+      const newAnswerContainer = createNewElement('div', 'class', 'single_answers_container')
+      const newAnswerSection = createNewElement('div', 'class', 'answers_section')
+      const newAnsweredBy = createNewElement('p', 'class', 'user_info')
 
       newAnswer.innerHTML = answer.content
-      newVoteCount.innerHTML = 'Votes'
+      newAnsweredBy.setAttribute('style', 'text-align: right')
+      newAnsweredBy.innerHTML = 'You answered'
 
-      newAnswerSection.appendChild(newVote)
+      newAnswerSection.appendChild(createNewVote())
       newAnswerContainer.appendChild(newAnswer)
+      newAnswerContainer.appendChild(newAnsweredBy)
       answersContainer.appendChild(newAnswerSection)
       newAnswerSection.appendChild(newAnswerContainer)
-      newVote.appendChild(newUpButton)
-      newUpButton.appendChild(newUpImg)
-      newVote.appendChild(newVoteCount)
-      newVote.appendChild(newDownButton)
-      newDownButton.appendChild(newDownImg)
 
       errorMessage.innerHTML = ''
       form.reset()
 
     }
-
 
     if (!content && errorMessage.innerHTML === '') {
 
@@ -77,18 +94,7 @@ window.addEventListener("load", (event) => {
       newErrorContainer.appendChild(errorMessage)
     }
 
-
     e.stopImmediatePropagation()
-
-
-
-    // 1. don't add a new vote/answer if we dont fill out the form
-    // 2. render errors, if any
-    //    a. lines 22-34 will only happen when we correctly fill out form, else
-    //    b. replicate lines 22-34 for an error element
-    // 3. make new div .answers_container to hold answers_section (up/down buttons as well), append to that new div
-
-
 
     //When we hit the submit button, make a post fetch request with new answer
 
