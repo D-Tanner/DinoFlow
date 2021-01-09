@@ -47,6 +47,12 @@ window.addEventListener("load", (event) => {
       const downvoteImg = createNewElement('img', 'class', 'resize')
       downvoteImg.setAttribute('src', '../down-filled-triangular-arrow.png')
 
+      newUpVote.setAttribute('id', 'upVote')
+      newUpVote.setAttribute('data-answerid', 'answer.id')
+
+      newDownVote.setAttribute('id', 'downVote')
+      newDownVote.setAttribute('data-ansid', 'answer.id')
+
       newUpVote.appendChild(upvoteImg)
       newSpan.innerHTML = 'Votes'                                                 // replace this with actual count(?)
       newDownVote.appendChild(downvoteImg)
@@ -74,13 +80,13 @@ window.addEventListener("load", (event) => {
       newAnsweredBy.innerHTML = 'You answered'
 
       newAnswerSection.appendChild(createNewVote())
-      
-      newUpButton.setAttribute('id', 'upVote')
-      newUpButton.setAttribute('data-answerid', 'answer.id')
-      
-      newDownButton.setAttribute('id', 'downVote')
-      newDownButton.setAttribute('data-ansid', 'answer.id')
-      
+
+      // newUpButton.setAttribute('id', 'upVote')
+      // newUpButton.setAttribute('data-answerid', 'answer.id')
+
+      // newDownButton.setAttribute('id', 'downVote')
+      // newDownButton.setAttribute('data-ansid', 'answer.id')
+
       newAnswerContainer.appendChild(newAnswer)
       newAnswerContainer.appendChild(newAnsweredBy)
       answersContainer.appendChild(newAnswerSection)
