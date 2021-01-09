@@ -26,11 +26,21 @@ block content
         each answer in answers
           div(class="answers_section")
             div(class="votes")
-              button.upVote(class="button_votes" data-answerid=answer.id, data-id=answer.id"up", data-votetype="upVote")
-                img.resize(src='../triangular-filled-up-arrow.png')
+              if locals.authenticated
+                button.upVote(class="button_votes" data-answerid=answer.id, data-votetype="upVote")
+                  img.resize(src='../triangular-filled-up-arrow.png')
+              else
+                form(method='get' action="/users/login")
+                  button(class="button_votes")
+                      img.resize(src='../triangular-filled-up-arrow.png')
               span(class='vote_count')= answer.dataValues.Votes
-              button.downVote(class="button_votes" data-answerid=answer.id, data-id='"down"#{answer.id}', data-votetype="downVote")
-                img.resize(src='../down-filled-triangular-arrow.png')
+              if locals.authenticated
+                button.downVote(class="button_votes" data-answerid=answer.id, data-votetype="downVote")
+                  img.resize(src='../down-filled-triangular-arrow.png')
+              else
+                form(method='get' action="/users/login")
+                  button(class="button_votes")
+                      img.resize(src='../down-filled-triangular-arrow.png')
             div(class='single_answers_container')
               div(class="single_answers") #{answer.dataValues.content} Answer
 

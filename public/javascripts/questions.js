@@ -94,8 +94,8 @@ window.addEventListener("load", (event) => {
   //   })
   // })
 
-  const upVotes = document.querySelectorAll('.upVote')
-  const downVotes = document.querySelectorAll('.downVote')
+  let upVotes = document.querySelectorAll('button.upVote')
+  let downVotes = document.querySelectorAll('button.downVote')
 
   console.log(upVotes)
   console.log(downVotes)
