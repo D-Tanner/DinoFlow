@@ -17,5 +17,5 @@ block content
             each question in questions
                li
                 a(href=`/question/${question.id}`)= question.title
-                //- p(id="user_info" style='text-align: right')= `Asked by ${question.User.username}`
+                p(id="user_info" style='text-align: right')= `Asked by ${question.User.username}`
                 //- p(id="user_info")= `Asked at ${question.createdAt} by ${question.User.username}` //We want to implement this
