@@ -157,7 +157,7 @@ window.addEventListener("load", (event) => {
 
       if (result.sameVote) return
 
-      let spanNumber = document.querySelector('.vote_count')
+      let spanNumber = document.querySelector(`[data-id="${answerId}span"]`)
       let total = parseInt(spanNumber.innerHTML)
       if (total == -1) {
         total = 1;
@@ -165,8 +165,7 @@ window.addEventListener("load", (event) => {
         ++total;
       }
       spanNumber.innerHTML = total
-      let down = document.querySelector(`[data-id="down${answerId}"]`);
-      console.log("down button ", down)
+      document.querySelector(`[data-id="${answerId}down"]`).disabled = false;
       e.stopImmediatePropagation()
     })
   })
@@ -193,7 +192,7 @@ window.addEventListener("load", (event) => {
 
       if (result.sameVote) return
 
-      let spanNumber = document.querySelector('.vote_count')
+      let spanNumber = document.querySelector(`[data-id="${answerId}span"]`)
       let total = parseInt(spanNumber.innerHTML)
       if (total == 1) {
         total = -1;
@@ -202,7 +201,7 @@ window.addEventListener("load", (event) => {
       }
       spanNumber.innerHTML = total
 
-      document.querySelector(`[data-id="up${answerId}"]`).disabled = false;
+      document.querySelector(`[data-id="${answerId}up"]`).disabled = false;
       e.stopImmediatePropagation()
     })
   })
