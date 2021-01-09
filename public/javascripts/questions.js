@@ -66,10 +66,10 @@ window.addEventListener("load", (event) => {
       const newAnswer = createNewElement('div', 'class', 'single_answers')
       const newAnswerContainer = createNewElement('div', 'class', 'single_answers_container')
       const newAnswerSection = createNewElement('div', 'class', 'answers_section')
-      const newAnsweredBy = createNewElement('p', 'class', 'user_info')
+      const newAnsweredBy = createNewElement('p', 'class', 'answered_by')
 
       newAnswer.innerHTML = answer.content
-      newAnsweredBy.setAttribute('style', 'text-align: right')
+      // newAnsweredBy.setAttribute('style', 'text-align: center; display: table-cell; vertical-align: middle')
       newAnsweredBy.innerHTML = 'You answered'
 
       newAnswerSection.appendChild(createNewVote())

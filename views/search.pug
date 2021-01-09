@@ -16,6 +16,6 @@ block content
         ul.list
             each question in questions
                li
-                a(href=`/question/${question.id}`)= question.title
-                p(id="user_info" style='text-align: right')= `Asked by ${question.User.username}`
+                a(href=`/question/${question.id}` style='text-align: left; display: flex; align-self: center')= question.title
+                p.user_info Asked by #[a.user_info(style='color: darkblue;')= question.User.username]
                 //- p(id="user_info")= `Asked at ${question.createdAt} by ${question.User.username}` //We want to implement this

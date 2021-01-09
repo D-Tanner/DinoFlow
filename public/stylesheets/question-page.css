@@ -28,16 +28,38 @@ button {
   align-items: center;
   border-top: 1px solid gray;
 }
-/*appending answers not working yet*/
-
-.single_answers {
-
-  padding: 10px 0;
-  margin-left: 20px;
-}
 
 .single_answers_container {
+  display: grid;
+  grid-template-columns: 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5%;
+  grid-template-rows: 100%;
+  grid-template-areas:
+    'answer answer answer answer answer answer answer answered'
+    ;
   width: 100%;
+}
+
+.single_answers {
+  padding: 15px;
+  grid-area: answer;
+  vertical-align: middle;
+}
+
+.user_info {
+  text-align: right;
+  color: darkblue;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.answered_by {
+  font-size: 15px;
+  grid-area: answered;
+  display: table-cell;
+  text-align: right;
+  vertical-align: middle;
+  align-self: center;
+  color: black;
 }
 
 .votes {
