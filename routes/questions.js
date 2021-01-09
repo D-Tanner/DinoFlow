@@ -54,31 +54,55 @@ router.post('/ask-question', csrfProtection, questionValidators, asyncHandler(as
 router.get('/question/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => {
   const questionId = parseInt(req.params.id, 10)
 
-   //Sebastian's old query
-//   const question = await Question.findByPk(questionId, {
-//     include: [
-//       { model: Answer,
-//         include: [
-//           {
-//             model: User,
-//             attributes: [
-//               'username'
-//             ]
-//           }
-//         ],
-//       },
-//       {
-//         model: User,
-//         attributes: [
-//           'username'
-//         ]
-//       }
-//     ]
-//   })
+  //Sebastian's old query
+  // const question = await Question.findByPk(questionId, {
+  //   include: [
+  //     {
+  //       model: Answer,
+  //       include: [
+  //         {
+  //           model: User,
+  //           attributes: [
+  //             'username'
+  //           ]
+  //         }
+  //       ],
+  //     },
+  //     {
+  //       model: User,
+  //       attributes: [
+  //         'username'
+  //       ]
+  //     },
+  //   ]
+  // })
 
   //Original
   //const question = await Question.findByPk(questionId, { include: [{ model: User, attributes: ['username'] }, { model: Answer, include: ['Votes'] }] })
-  const question = await Question.findByPk(questionId, { include: [{ model: Answer, include: [{include: [model: User, attributes: ['username']}]}, { model: User, attributes: ['username'] }, { model: Answer, include: ['Votes'] }] })
+
+  const question = await Question.findByPk(questionId, {
+    include: [{
+      model: Answer,
+      include: [
+        {
+          model: User,
+          attributes: [
+            'username'
+          ]
+        }
+      ],
+    },
+    {
+      model: User,
+      attributes: [
+        'username'
+      ]
+    }, { model: User, attributes: ['username'] }, { model: Answer, include: ['Votes'] }]
+  })
+
+  // const question = await Question.findByPk(questionId, { include: [{ model: Answer, include: [{ include: [{ model: User, attributes: ['username'] }] },
+  // { model: User, attributes: ['username'] },
+  // { model: Answer, include: ['Votes'] }] })
 
 
   for (let answer of question.Answers) {
@@ -89,7 +113,7 @@ router.get('/question/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, 
       return --acc;
     }, 0)
   }
-  
+
   const sortedAnswers = question.Answers.sort((a, b) => {
     if (a.createdAt > b.createdAt) {
       return 1
@@ -97,7 +121,7 @@ router.get('/question/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, 
       return -1
     }
   })
-  
+
   //previous main's question query that was replaced by Juan and Lu's query
   //const question = await Question.findByPk(questionId, { include: ['Answers', { model: User, attributes: ['username'] }] })
 
