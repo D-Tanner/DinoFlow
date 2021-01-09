@@ -38,8 +38,15 @@ window.addEventListener("load", (event) => {
       newAnswerSection.setAttribute('class', 'answers_section')
       newAnswer.setAttribute('class', 'single_answers')
       newVote.setAttribute('class', 'votes')
+
       newUpButton.setAttribute('class', 'button_votes')
+      newUpButton.setAttribute('id', 'upVote')
+      newUpButton.setAttribute('data-answerid', 'answer.id')
+
+      newDownButton.setAttribute('id', 'downVote')
+      newDownButton.setAttribute('data-ansid', 'answer.id')
       newDownButton.setAttribute('class', 'button_votes')
+
       newUpImg.setAttribute('src', '../triangular-filled-up-arrow.png')
       newUpImg.setAttribute('class', 'resize')
       newDownImg.setAttribute('src', '../down-filled-triangular-arrow.png')
@@ -146,4 +153,3 @@ window.addEventListener("load", (event) => {
     e.stopImmediatePropagation()
   })
 })
-

@@ -23,23 +23,24 @@ nav {
 .logo:hover {
     background-color: rgb(253, 212, 136);
 } */
-.mainButtons > a {
+
+/* .mainButtons > a {
     vertical-align: middle;
     float: left;
     color: gray;
     text-align: center;
-    padding: 0;
+    padding: 0px 0px 0px 0px;
     text-decoration: none;
     transition-duration: 0.2s;
     width: 4rem;
     height: 41px;
     border-radius: 15px;
-    margin: 0.25rem 0.25rem 0 0.25rem;
-}
+    margin: 0.25rem 1rem 0 0.25rem;
+} */
 
-.mainButtons > a:hover {
+/* .mainButtons > a:hover {
     background-color: rgb(253, 212, 136);
-}
+} */
 
 .userButtons > a {
     float: right;
@@ -54,6 +55,7 @@ nav {
     align-items: center;
     float: left;
     padding: 5px;
+
 }
 
 .userButtons {
@@ -137,4 +139,33 @@ nav {
     background-repeat: no-repeat;
     background-size: cover;
     opacity: 0.07;
+}
+
+#logo {
+    height: 100%;
+    vertical-align: middle;
+    float: left;
+    color: gray;
+    text-align: center;
+    padding: 0px 0px 0px 0px;
+    text-decoration: none;
+    transition-duration: 0.2s;
+    width: 7rem;
+    height: 40px;
+    border-radius: 10px;
+    margin: 0.25rem 1rem 0 0.25rem;
+
+}
+
+#logo_image {
+    height: 100%;
+    width: 100%;
+    border-radius: 10px;
+    opacity: 1;
+    transition-duration: 0.2s;
+    backface-visibility: hidden;
+}
+
+#logo_image:hover {
+    opacity: 0.3;
 }
