@@ -28,11 +28,12 @@ block content
             div(class="votes")
               button#upVote(class="button_votes" data-answerid=answer.id)
                 img.resize(src='../triangular-filled-up-arrow.png')
-              span(class='vote_count') Votes #{votes_count}
+              //-span(class='vote_count') Votes #{votes_count}
+              span(class='vote_count') #{answer.dataValues.Votes}
               button#downVote(class="button_votes" data-ansid=answer.id)
                 img.resize(src='../down-filled-triangular-arrow.png')
             div(class='single_answers_container')
-              div(class="single_answers") #{answer.dataValues.content} Answer
+              div(class="single_answers") #{answer.dataValues.content}
 
       if locals.authenticated
         //- +validationErrorSummary(errors)

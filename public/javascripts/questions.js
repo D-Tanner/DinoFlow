@@ -39,6 +39,8 @@ window.addEventListener("load", (event) => {
       newAnswer.setAttribute('class', 'single_answers')
       newVote.setAttribute('class', 'votes')
       newUpButton.setAttribute('class', 'button_votes')
+
+      //newUpButton.setAttribute('id', 'button_votes')
       newDownButton.setAttribute('class', 'button_votes')
       newUpImg.setAttribute('src', '../triangular-filled-up-arrow.png')
       newUpImg.setAttribute('class', 'resize')
@@ -146,4 +148,3 @@ window.addEventListener("load", (event) => {
     e.stopImmediatePropagation()
   })
 })
-

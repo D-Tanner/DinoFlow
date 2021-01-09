@@ -56,7 +56,6 @@ router.get('/question/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, 
   const question = await Question.findByPk(questionId, { include: [{ model: User, attributes: ['username'] }, { model: Answer, include: ['Votes'] }] })
   //const question = await Question.findByPk(questionId, { include: [{ model: Answer, include: ['Votes'] }] })
 
-
   for (let answer of question.Answers) {
     answer.dataValues.Votes = answer.Votes.reduce((acc, vote) => {
       if (vote.isUpvote) {
