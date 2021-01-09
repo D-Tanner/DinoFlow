@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const csrf = require('csurf')
-const { Question, Answer } = require('../db/models')
+const { Question, Answer, User } = require('../db/models')
 const { check, validationResult } = require('express-validator');
 const db = require('../db/models');
 const { csrfProtection, asyncHandler } = require('./utils')
@@ -52,8 +52,9 @@ router.post('/ask-question', csrfProtection, questionValidators, asyncHandler(as
 
 router.get('/question/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => {
   const questionId = parseInt(req.params.id, 10)
+
   const question = await Question.findByPk(questionId, { include: [{ model: Answer, include: ['Votes'] }] })
-  //const answers = await Answer.findAll({ where: questionId })
+
 
   for (let answer of question.Answers) {
     answer.dataValues.Votes = answer.Votes.reduce((acc, vote) => {
@@ -72,6 +73,13 @@ router.get('/question/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, 
   //   return --acc;
   // },0)));
 
+
+  //previous main's question query that was replaced by Juan and Lu's query
+  //const question = await Question.findByPk(questionId, { include: ['Answers', { model: User, attributes: ['username'] }] })
+  
+  //const answers = await Answer.findAll({ where: questionId })
+
+
   res.render('question', { title: 'Question', question, answers: question.Answers, csrfToken: req.csrfToken() },)
 }));
 
@@ -81,7 +89,7 @@ router.get('/question/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, 
 
 router.post('/question/:id(\\d+)/answers', answerValidators, asyncHandler(async (req, res, next) => {
   const questionId = parseInt(req.params.id, 10)
-  console.log(questionId)
+  // console.log(questionId)
   // {userId} = Answer
   const { content } = req.body
   console.log(req.session)

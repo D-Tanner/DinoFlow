@@ -14,6 +14,7 @@ li {
     color: #0077cc;
     background-color: #fdf7e3;
     margin: 20px 0px 20px 0px;
+    width: 100%;
 }
 
 li:hover {
@@ -26,5 +27,13 @@ a {
 }
 
 .list {
+    /* padding: 25px 15px 25px 15px; */
+    width: 80%;
     margin: 0 auto;
+}
+
+#user_info {
+    font-size: 15px;
+    color: #3c4146;
+    margin: 10px 0px 0px 0px;
 }

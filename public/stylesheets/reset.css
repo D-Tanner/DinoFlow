@@ -44,6 +44,19 @@ h1 {
   padding-top: 10px;
 }
 
+.login_alert {
+  box-sizing: border-box;
+  /* position: relative; */
+  height: 30%;
+  width: 80%;
+  padding: 3rem;
+  margin: 20px auto;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  background-color: #f5c2c7;
+  color: #842029;
+}
+
 body{
   background-color: #eff0f1;
 }
@@ -61,12 +74,13 @@ body{
   line-height: 44px;
   font-size: 13px;
   border-radius: 5px;
-  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.4);
+  box-shadow: 1px 1px 5px 1px gray;
   height: 44px;
   width: 6rem;
   transition-duration: 0.2s;
   text-decoration: none;
   margin: 20px 20px 20px auto;
+
 }
 
 #ask-question-button:hover {

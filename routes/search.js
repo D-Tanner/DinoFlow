@@ -14,7 +14,8 @@ router.get('/search', asyncHandler(async (req, res, next) => {
         },
         order: [
             ['createdAt', 'DESC']
-        ]
+        ],
+        include: ['Answers', { model: User, attributes: ['username'] }],
     })
     res.render('search', { title: 'Search for a question', questions })
 }))
