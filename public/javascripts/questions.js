@@ -47,14 +47,14 @@ window.addEventListener("load", (event) => {
       const downvoteImg = createNewElement('img', 'class', 'resize')
       downvoteImg.setAttribute('src', '../down-filled-triangular-arrow.png')
 
-      newUpVote.setAttribute('id', 'upVote')
+      newUpVote.setAttribute('class', 'upVote button_votes')
       newUpVote.setAttribute('data-answerid', 'answer.id')
 
-      newDownVote.setAttribute('id', 'downVote')
+      newDownVote.setAttribute('class', 'downVote button_votes')
       newDownVote.setAttribute('data-ansid', 'answer.id')
 
       newUpVote.appendChild(upvoteImg)
-      newSpan.innerHTML = 'Votes'                                                 // replace this with actual count(?)
+      newSpan.innerHTML = '0'                                                // replace this with actual count(?)
       newDownVote.appendChild(downvoteImg)
 
       newVoteDiv.appendChild(newUpVote)
@@ -113,8 +113,8 @@ window.addEventListener("load", (event) => {
 
 
 
-  const upVote = document.querySelector('#upVote')
-  const downVote = document.querySelector('#downVote')
+  const upVote = document.querySelector('.upVote')
+  const downVote = document.querySelector('.downVote')
 
   upVote.addEventListener('click', async e => {
     e.preventDefault();
