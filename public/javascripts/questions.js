@@ -63,6 +63,7 @@ window.addEventListener("load", (event) => {
 
     if (content) {
       let answersContainer = document.querySelector(".answers_container")
+
       const newAnswer = createNewElement('div', 'class', 'single_answers')
       const newAnswerContainer = createNewElement('div', 'class', 'single_answers_container')
       const newAnswerSection = createNewElement('div', 'class', 'answers_section')
@@ -73,6 +74,13 @@ window.addEventListener("load", (event) => {
       newAnsweredBy.innerHTML = 'You answered'
 
       newAnswerSection.appendChild(createNewVote())
+      
+      newUpButton.setAttribute('id', 'upVote')
+      newUpButton.setAttribute('data-answerid', 'answer.id')
+      
+      newDownButton.setAttribute('id', 'downVote')
+      newDownButton.setAttribute('data-ansid', 'answer.id')
+      
       newAnswerContainer.appendChild(newAnswer)
       newAnswerContainer.appendChild(newAnsweredBy)
       answersContainer.appendChild(newAnswerSection)
@@ -95,12 +103,74 @@ window.addEventListener("load", (event) => {
     }
 
     e.stopImmediatePropagation()
-
-    //When we hit the submit button, make a post fetch request with new answer
-
-    //load in the new answer
-
-    //create a new answer div and add it in question.pug file by appending the child to class="answers_section"
   })
 
+
+
+  const upVote = document.querySelector('#upVote')
+  const downVote = document.querySelector('#downVote')
+
+  upVote.addEventListener('click', async e => {
+    e.preventDefault();
+    const isUpvote = true
+    const body = { isUpvote }
+
+    const answerId = e.currentTarget.dataset.answerid
+    console.log(e.currentTarget)
+    e.currentTarget.disabled = true;
+
+    const response = await fetch(`http://localhost:8000/answers/${answerId}/votes`, {
+      method: "POST",
+      body: JSON.stringify(body),
+      headers: {
+        "Content-Type": "application/json",
+      }
+    });
+    const result = await response.json()
+
+    if (result.sameVote) return
+
+    let spanNumber = document.querySelector('.vote_count')
+    let total = parseInt(spanNumber.innerHTML)
+    if (total == -1) {
+      total = 1;
+    } else {
+      ++total;
+    }
+    spanNumber.innerHTML = total
+    document.querySelector(`[data-ansid="${answerId}"]`).disabled = false;
+    e.stopImmediatePropagation()
+  })
+
+  downVote.addEventListener('click', async e => {
+    e.preventDefault();
+    const isUpvote = false
+    const body = { isUpvote }
+
+    const answerId = e.currentTarget.dataset.ansid
+    console.log(e.currentTarget)
+    e.currentTarget.disabled = true;
+    const response = await fetch(`http://localhost:8000/answers/${answerId}/votes`, {
+      method: "POST",
+      body: JSON.stringify(body),
+      headers: {
+        "Content-Type": "application/json",
+      }
+    });
+    const result = await response.json()
+
+    if (result.sameVote) return
+
+    let spanNumber = document.querySelector('.vote_count')
+    let total = parseInt(spanNumber.innerHTML)
+    if (total == 1) {
+      total = -1;
+    } else {
+      --total;
+    }
+    spanNumber.innerHTML = total
+
+    document.querySelector(`[data-answerid="${answerId}"]`).disabled = false;
+    e.stopImmediatePropagation()
+  })
 })
