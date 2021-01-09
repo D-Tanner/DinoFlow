@@ -3,7 +3,7 @@ const router = express.Router();
 const csrf = require('csurf')
 const { Question, Answer, User } = require('../db/models')
 const { check, validationResult } = require('express-validator');
-const db = require('../db/models');
+// const db = require('../db/models');
 
 const csrfProtection = csrf({ cookie: true })
 
@@ -56,11 +56,41 @@ router.post('/ask-question', csrfProtection, questionValidators, asyncHandler(as
 
 router.get('/question/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => {
   const questionId = parseInt(req.params.id, 10)
-  const question = await Question.findByPk(questionId, { include: ['Answers', { model: User, attributes: ['username'] }] })
-  //const answers = await Answer.findAll({ where: questionId })
-  console.log(question.User)
-  console.log(question.Answers)
-  res.render('question', { title: 'Question', question, answers: question.Answers, csrfToken: req.csrfToken() },)
+  const question = await Question.findByPk(questionId, {
+    include: [
+      {
+        model: Answer,
+        // order: [
+        //   ['createdAt', 'ASC']
+        // ],
+        include: [
+          {
+            model: User,
+            attributes: [
+              'username'
+            ]
+          }
+        ],
+      },
+      {
+        model: User,
+        attributes: [
+          'username'
+        ]
+      }
+    ]
+  })
+  // const question = await Question.findByPk(questionId, { include: ['Answers', { model: User, attributes: ['username'] }] })
+  const answers = question.Answers.sort((a, b) => {
+    if (a.createdAt > b.createdAt) {
+      return 1
+    } else {
+      return -1
+    }
+  })
+
+  res.render('question', { title: 'Question', question, answers, csrfToken: req.csrfToken() },)
+  // res.render('question', { title: 'Question', question, answers: question.Answers, csrfToken: req.csrfToken() },)
 }));
 
 //!csrf messes up with 403 error
