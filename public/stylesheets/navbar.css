@@ -55,6 +55,7 @@ nav {
     align-items: center;
     float: left;
     padding: 5px;
+
 }
 
 .userButtons {
@@ -165,18 +166,6 @@ nav {
     backface-visibility: hidden;
 }
 
-/* #logo_highlight {
-    height: 100%;
-    width: 100%;
-    border-radius: 10px;
-    z-index: -1;
-} */
-
 #logo_image:hover {
     opacity: 0.3;
 }
-
-/* #logo_highlight:hover {
-    background-color: rgb(253, 212, 136);
-    opacity: 1;
-} */
