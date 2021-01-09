@@ -6,6 +6,7 @@ const { check, validationResult } = require('express-validator');
 const db = require('../db/models');
 const { csrfProtection, asyncHandler } = require('./utils')
 
+
 /* GET users listing. */
 router.get('/ask-question', csrfProtection, asyncHandler(async (req, res, next) => {
   res.render('ask-question-page', { title: 'Ask a Question', question: {}, csrfToken: req.csrfToken() })
@@ -53,8 +54,32 @@ router.post('/ask-question', csrfProtection, questionValidators, asyncHandler(as
 router.get('/question/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => {
   const questionId = parseInt(req.params.id, 10)
 
-  const question = await Question.findByPk(questionId, { include: [{ model: User, attributes: ['username'] }, { model: Answer, include: ['Votes'] }] })
-  //const question = await Question.findByPk(questionId, { include: [{ model: Answer, include: ['Votes'] }] })
+   //Sebastian's old query
+//   const question = await Question.findByPk(questionId, {
+//     include: [
+//       { model: Answer,
+//         include: [
+//           {
+//             model: User,
+//             attributes: [
+//               'username'
+//             ]
+//           }
+//         ],
+//       },
+//       {
+//         model: User,
+//         attributes: [
+//           'username'
+//         ]
+//       }
+//     ]
+//   })
+
+  //Original
+  //const question = await Question.findByPk(questionId, { include: [{ model: User, attributes: ['username'] }, { model: Answer, include: ['Votes'] }] })
+  const question = await Question.findByPk(questionId, { include: [{ model: Answer, include: [{include: [model: User, attributes: ['username']}]}, { model: User, attributes: ['username'] }, { model: Answer, include: ['Votes'] }] })
+
 
   for (let answer of question.Answers) {
     answer.dataValues.Votes = answer.Votes.reduce((acc, vote) => {
@@ -64,23 +89,21 @@ router.get('/question/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, 
       return --acc;
     }, 0)
   }
-
-  // console.log(question.Answers.map(answer => answer.toJSON()));
-  // console.log(question.Answers.map(answer => answer.Votes.reduce((acc, vote) =>{
-  //   if(vote.isUpvote){
-  //     return ++acc;
-  //   }
-  //   return --acc;
-  // },0)));
-
-
+  
+  const sortedAnswers = question.Answers.sort((a, b) => {
+    if (a.createdAt > b.createdAt) {
+      return 1
+    } else {
+      return -1
+    }
+  })
+  
   //previous main's question query that was replaced by Juan and Lu's query
   //const question = await Question.findByPk(questionId, { include: ['Answers', { model: User, attributes: ['username'] }] })
 
-  //const answers = await Answer.findAll({ where: questionId })
 
+  res.render('question', { title: 'Question', question, answers: question.Answers, sortedAnswers, csrfToken: req.csrfToken() },)
 
-  res.render('question', { title: 'Question', question, answers: question.Answers, csrfToken: req.csrfToken() },)
 }));
 
 //!csrf messes up with 403 error

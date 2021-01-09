@@ -10,11 +10,16 @@ li {
     list-style-type: none;
     border: 1px solid black;
     border-radius: 0.5em;
-    padding: 25px 15px 25px 15px;
     color: #0077cc;
     background-color: #fdf7e3;
     margin: 20px 0px 20px 0px;
     width: 100%;
+    display: grid;
+    /* grid-template-columns: 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5%; */
+    grid-template-areas:
+        'title title title title title title none'
+        'title title title title title title answered'
+    ;
 }
 
 li:hover {
@@ -24,6 +29,9 @@ li:hover {
 
 a {
     text-decoration: none;
+    grid-area: title;
+    color: #3c4146;
+    font-weight: bold;
 }
 
 .list {
@@ -32,8 +40,9 @@ a {
     margin: 0 auto;
 }
 
-#user_info {
-    font-size: 15px;
+.user_info {
+    font-size: 12px;
     color: #3c4146;
-    margin: 10px 0px 0px 0px;
+    text-align: right;
+    /* margin: 10px 0px 0px 80%; */
 }

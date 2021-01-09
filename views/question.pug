@@ -17,7 +17,7 @@ block content
     div(class="page_content")
       div(class="question_content")
         h1(id="title")= question.title
-        p(id='user_info' style='text-align: right')= `Asked by ${question.User.username}`
+        p(class='user_info' style='text-align: right; color: black; font-weight: normal;') Asked by #[a.user_info= question.User.username]
         hr
         p= question.content
       h2 Answers
@@ -33,7 +33,9 @@ block content
               button#downVote(class="button_votes" data-ansid=answer.id)
                 img.resize(src='../down-filled-triangular-arrow.png')
             div(class='single_answers_container')
-              div(class="single_answers") #{answer.dataValues.content}
+              div(class="single_answers")= answer.dataValues.content
+              p(class='answered_by' style='text-align: center') Answered by #[a.user_info= answer.User.username]
+  
 
       if locals.authenticated
         //- +validationErrorSummary(errors)
