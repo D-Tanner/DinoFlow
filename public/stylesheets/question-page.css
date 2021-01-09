@@ -32,8 +32,12 @@ button {
 
 .single_answers {
 
-  padding-bottom: 15px;
+  padding: 10px 0;
   margin-left: 20px;
+}
+
+.single_answers_container {
+  width: 100%;
 }
 
 .votes {
@@ -63,6 +67,7 @@ button {
 
 textarea {
   width: 100%;
+  padding: 10px;
 }
 
 #answer_button {
@@ -80,4 +85,8 @@ textarea {
 .resize {
   width: 36px;
   height: 36px;
+}
+
+.container > * {
+  padding: 50px;
 }

@@ -32,7 +32,7 @@ block content
                 img.resize(src='../down-filled-triangular-arrow.png')
             div(class='single_answers_container')
               div(class="single_answers")= answer.dataValues.content
-              p(id='answered_by' style='text-align: right')= `Answered by ${answer.User.username}`
+              p(id='user_info' style='text-align: right')= `Answered by ${answer.User.username}`
 
       if locals.authenticated
         //- +validationErrorSummary(errors)

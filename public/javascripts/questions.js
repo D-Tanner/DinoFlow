@@ -28,6 +28,7 @@ window.addEventListener("load", (event) => {
       let answersContainer = document.querySelector(".answers_container")
       let newAnswerSection = document.createElement('div')
       let newAnswer = document.createElement('div')
+      let newAnswerContainer = document.createElement('div')
       let newVote = document.createElement('div')
       let newUpButton = document.createElement('button')
       let newDownButton = document.createElement('button')
@@ -35,6 +36,7 @@ window.addEventListener("load", (event) => {
       let newDownImg = document.createElement('img')
       let newVoteCount = document.createElement('span')
 
+      newAnswerContainer.setAttribute('class', 'single_answers_container')
       newAnswerSection.setAttribute('class', 'answers_section')
       newAnswer.setAttribute('class', 'single_answers')
       newVote.setAttribute('class', 'votes')
@@ -49,8 +51,9 @@ window.addEventListener("load", (event) => {
       newVoteCount.innerHTML = 'Votes'
 
       newAnswerSection.appendChild(newVote)
-      newAnswerSection.appendChild(newAnswer)
+      newAnswerContainer.appendChild(newAnswer)
       answersContainer.appendChild(newAnswerSection)
+      newAnswerSection.appendChild(newAnswerContainer)
       newVote.appendChild(newUpButton)
       newUpButton.appendChild(newUpImg)
       newVote.appendChild(newVoteCount)
