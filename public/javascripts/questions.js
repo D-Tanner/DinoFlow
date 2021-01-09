@@ -24,44 +24,78 @@ window.addEventListener("load", (event) => {
 
     const answer = await response.json()
 
+
+
+    //------------------------util-functions-----------------------------//
+    const createNewElement = (ele, attributeType, attribute) => {
+      const newEle = document.createElement(ele)
+      newEle.setAttribute(attributeType, attribute)
+      return newEle
+    }
+
+
+    const createNewVote = () => {
+      const newVoteDiv = createNewElement('div', 'class', 'votes')
+
+      const newUpVote = createNewElement('button', 'class', 'button_votes')
+      const upvoteImg = createNewElement('img', 'class', 'resize')
+      upvoteImg.setAttribute('src', '../triangular-filled-up-arrow.png')
+
+      const newSpan = createNewElement('span', 'class', 'vote_count')
+
+      const newDownVote = createNewElement('button', 'class', 'button_votes')
+      const downvoteImg = createNewElement('img', 'class', 'resize')
+      downvoteImg.setAttribute('src', '../down-filled-triangular-arrow.png')
+
+      newUpVote.setAttribute('class', 'upVote button_votes')
+      newUpVote.setAttribute('data-answerid', 'answer.id')
+
+      newDownVote.setAttribute('class', 'downVote button_votes')
+      newDownVote.setAttribute('data-ansid', 'answer.id')
+
+      newUpVote.appendChild(upvoteImg)
+      newSpan.innerHTML = '0'                                                // replace this with actual count(?)
+      newDownVote.appendChild(downvoteImg)
+
+      newVoteDiv.appendChild(newUpVote)
+      newVoteDiv.appendChild(newSpan)
+      newVoteDiv.appendChild(newDownVote)
+
+      return newVoteDiv
+    }
+    //-------------------------------------------------------------------------//
+
+
+
     if (content) {
       let answersContainer = document.querySelector(".answers_container")
-      let newAnswerSection = document.createElement('div')
-      let newAnswer = document.createElement('div')
-      let newVote = document.createElement('div')
-      let newUpButton = document.createElement('button')
-      let newDownButton = document.createElement('button')
-      let newUpImg = document.createElement('img')
-      let newDownImg = document.createElement('img')
-      let newVoteCount = document.createElement('span')
 
-      newAnswerSection.setAttribute('class', 'answers_section')
-      newAnswer.setAttribute('class', 'single_answers')
-      newVote.setAttribute('class', 'votes')
-      newUpButton.setAttribute('class', 'button_votes')
-      newDownButton.setAttribute('class', 'button_votes')
-      newUpImg.setAttribute('src', '../triangular-filled-up-arrow.png')
-      newUpImg.setAttribute('class', 'resize')
-      newDownImg.setAttribute('src', '../down-filled-triangular-arrow.png')
-      newDownImg.setAttribute('class', 'resize')
+      const newAnswer = createNewElement('div', 'class', 'single_answers')
+      const newAnswerContainer = createNewElement('div', 'class', 'single_answers_container')
+      const newAnswerSection = createNewElement('div', 'class', 'answers_section')
+      const newAnsweredBy = createNewElement('p', 'class', 'answered_by')
 
       newAnswer.innerHTML = answer.content
-      newVoteCount.innerHTML = 'Votes'
+      // newAnsweredBy.setAttribute('style', 'text-align: center; display: table-cell; vertical-align: middle')
+      newAnsweredBy.innerHTML = 'You answered'
 
-      newAnswerSection.appendChild(newVote)
-      newAnswerSection.appendChild(newAnswer)
+      newAnswerSection.appendChild(createNewVote())
+
+      // newUpButton.setAttribute('id', 'upVote')
+      // newUpButton.setAttribute('data-answerid', 'answer.id')
+
+      // newDownButton.setAttribute('id', 'downVote')
+      // newDownButton.setAttribute('data-ansid', 'answer.id')
+
+      newAnswerContainer.appendChild(newAnswer)
+      newAnswerContainer.appendChild(newAnsweredBy)
       answersContainer.appendChild(newAnswerSection)
-      newVote.appendChild(newUpButton)
-      newUpButton.appendChild(newUpImg)
-      newVote.appendChild(newVoteCount)
-      newVote.appendChild(newDownButton)
-      newDownButton.appendChild(newDownImg)
+      newAnswerSection.appendChild(newAnswerContainer)
 
       errorMessage.innerHTML = ''
       form.reset()
 
     }
-
 
     if (!content && errorMessage.innerHTML === '') {
 
@@ -73,7 +107,6 @@ window.addEventListener("load", (event) => {
       yourAnswerHeader.appendChild(newErrorContainer)
       newErrorContainer.appendChild(errorMessage)
     }
-
 
     e.stopImmediatePropagation()
   })
@@ -175,4 +208,3 @@ window.addEventListener("load", (event) => {
   })
 
 })
-

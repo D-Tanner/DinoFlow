@@ -86,3 +86,7 @@ body{
 #ask-question-button:hover {
   background-color: rgb(137, 193, 245);
 }
+
+input {
+  padding: 10px;
+}
