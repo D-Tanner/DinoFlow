@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const { User, Question } = require('../db/models')
 const { Op } = require('sequelize')
-const { asyncHandler } = require('./utils')
+const { csrfProtection, asyncHandler } = require('./utils')
 
 router.get('/search', asyncHandler(async (req, res, next) => {
     const { term } = req.query

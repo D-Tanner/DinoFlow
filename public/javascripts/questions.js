@@ -76,22 +76,74 @@ window.addEventListener("load", (event) => {
 
 
     e.stopImmediatePropagation()
-
-
-
-    // 1. don't add a new vote/answer if we dont fill out the form
-    // 2. render errors, if any
-    //    a. lines 22-34 will only happen when we correctly fill out form, else
-    //    b. replicate lines 22-34 for an error element
-    // 3. make new div .answers_container to hold answers_section (up/down buttons as well), append to that new div
-
-
-
-    //When we hit the submit button, make a post fetch request with new answer
-
-    //load in the new answer
-
-    //create a new answer div and add it in question.pug file by appending the child to class="answers_section"
   })
 
+  const upVote = document.querySelector('#upVote')
+  const downVote = document.querySelector('#downVote')
+
+  upVote.addEventListener('click', async e => {
+    e.preventDefault();
+    const isUpvote = true
+    const body = { isUpvote }
+
+    const answerId = e.currentTarget.dataset.answerid
+    console.log(e.currentTarget)
+    e.currentTarget.disabled = true;
+
+    const response = await fetch(`http://localhost:8000/answers/${answerId}/votes`, {
+      method: "POST",
+      body: JSON.stringify(body),
+      headers: {
+        "Content-Type": "application/json",
+      }
+    });
+    const result = await response.json()
+
+
+    if (result.sameVote) return
+
+    let spanNumber = document.querySelector('.vote_count')
+    let total = parseInt(spanNumber.innerHTML)
+    if (total == -1) {
+      total = 1;
+    } else {
+      ++total;
+    }
+    spanNumber.innerHTML = total
+    document.querySelector(`[data-ansid="${answerId}"]`).disabled = false;
+    e.stopImmediatePropagation()
+  })
+
+  downVote.addEventListener('click', async e => {
+    e.preventDefault();
+    const isUpvote = false
+    const body = { isUpvote }
+
+    const answerId = e.currentTarget.dataset.ansid
+    console.log(e.currentTarget)
+    e.currentTarget.disabled = true;
+    const response = await fetch(`http://localhost:8000/answers/${answerId}/votes`, {
+      method: "POST",
+      body: JSON.stringify(body),
+      headers: {
+        "Content-Type": "application/json",
+      }
+    });
+    const result = await response.json()
+
+    if (result.sameVote) return
+
+    let spanNumber = document.querySelector('.vote_count')
+    let total = parseInt(spanNumber.innerHTML)
+    if (total == 1) {
+      total = -1;
+    } else {
+      --total;
+    }
+    spanNumber.innerHTML = total
+
+    document.querySelector(`[data-answerid="${answerId}"]`).disabled = false;
+    e.stopImmediatePropagation()
+  })
 })
+
