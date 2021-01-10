@@ -8,8 +8,12 @@
   padding-top: 10px;
 }
 
+#question_content_text{
+  margin-bottom: 40px;
+}
+
 #title {
-  padding-bottom: 20px;
+  padding-bottom: 10px;
 }
 
 h2 {

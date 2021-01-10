@@ -19,7 +19,7 @@ block content
         h1(id="title")= question.title
         p(class='user_info' style='text-align: right; color: black; font-weight: normal;') Asked by #[a.user_info= question.User.username]
         hr
-        p= question.content
+        p(id="question_content_text")= question.content
       h2 Answers
 
       div.answers_container
