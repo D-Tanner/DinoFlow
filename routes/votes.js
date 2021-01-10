@@ -12,25 +12,25 @@ router.post("/answers/:id(\\d+)/votes", asyncHandler(async (req, res) => {
     const { isUpvote } = req.body
 
     const voteExists = await Vote.findOne({ where: { userId, answerId } });
-    
-    console.log(voteExists);
-    
+
+    // console.log(voteExists);
+
     let updatedVote;
     if (voteExists) {
-        console.log("in the loop")
+        // console.log("in the loop")
         if (voteExists.isUpvote === isUpvote) {
 
             res.json({ sameVote: true })
             return
         }
         else if (!req.body.isUpvote) {
-            console.log("changing to false")
+            //console.log("changing to false")
             updatedVote = await voteExists.update({ isUpvote: false });
         } else {
-            console.log("changing to true")
+            //console.log("changing to true")
             updatedVote = await voteExists.update({ isUpvote: true });
         }
-        console.log(" done with loop", updatedVote)
+        //console.log(" done with loop", updatedVote)
         return res.json(updatedVote)
     }
     const voteChange = await Vote.create(
@@ -48,7 +48,7 @@ router.get("/answers/:id(\\d+)/votes", asyncHandler(async (req, res) => {
     const answerId = parseInt(req.params.id, 10);
 
     const voteExists = await Vote.findOne({ where: { userId, answerId } });
-    console.log(voteExists);
+    //console.log(voteExists);
 
     res.json(voteExists)
 }))

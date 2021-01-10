@@ -116,7 +116,7 @@ router.get('/question/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, 
   const sortedAnswers = question.Answers.sort((a, b) => {
     // console.log("a   ", a.dataValues.Votes)
     // console.log("b   ", b.dataValues.Votes)
-    if (a.dataValues.Votes < b.dataValues.Votes) {
+    if (a.dataValues.Votes <= b.dataValues.Votes) {
       // if (a.createdAt > b.createdAt) {
       return 1
     } else {
