@@ -111,72 +111,99 @@ window.addEventListener("load", (event) => {
     e.stopImmediatePropagation()
   })
 
+  // const vote = document.querySelectorAll('.vote_on_answer')
+  // const downVote = document.querySelector('#downVote')
+  // console.log(vote)
+  // vote.forEach( v => {
+  //   v.addEventListener('submit', e => {
+  //     e.preventDefault();
+  //     const voteType = e.currentTarget.dataset.votetype;
+  //     const answerId = e.currentTarget.dataset.answerid;
+
+  //     console.log(`voteType ${voteType}`)
+  //     console.log(`answerId ${answerId}`)
+
+  //     e.stopImmediatePropagation()
+  //   })
+  // })
+
+  let upVotes = document.querySelectorAll('button.upVote')
+  let downVotes = document.querySelectorAll('button.downVote')
+
+  console.log(upVotes)
+  console.log(downVotes)
+
+  upVotes.forEach(v => {
+    v.addEventListener('click', async e => {
+
+      e.preventDefault();
+
+      const isUpvote = true
+      const body = { isUpvote }
+
+      const answerId = e.currentTarget.dataset.answerid
+      console.log(e.currentTarget)
+      e.currentTarget.disabled = true;
+
+      const response = await fetch(`http://localhost:8000/answers/${answerId}/votes`, {
+        method: "POST",
+        body: JSON.stringify(body),
+        headers: {
+          "Content-Type": "application/json",
+        }
+      });
+      const result = await response.json()
 
 
-  const upVote = document.querySelector('.upVote')
-  const downVote = document.querySelector('.downVote')
+      if (result.sameVote) return
 
-  upVote.addEventListener('click', async e => {
-    e.preventDefault();
-    const isUpvote = true
-    const body = { isUpvote }
-
-    const answerId = e.currentTarget.dataset.answerid
-    console.log(e.currentTarget)
-    e.currentTarget.disabled = true;
-
-    const response = await fetch(`http://localhost:8000/answers/${answerId}/votes`, {
-      method: "POST",
-      body: JSON.stringify(body),
-      headers: {
-        "Content-Type": "application/json",
+      let spanNumber = document.querySelector(`[data-id="${answerId}span"]`)
+      let total = parseInt(spanNumber.innerHTML)
+      if (total == -1) {
+        total = 1;
+      } else {
+        ++total;
       }
-    });
-    const result = await response.json()
-
-    if (result.sameVote) return
-
-    let spanNumber = document.querySelector('.vote_count')
-    let total = parseInt(spanNumber.innerHTML)
-    if (total == -1) {
-      total = 1;
-    } else {
-      ++total;
-    }
-    spanNumber.innerHTML = total
-    document.querySelector(`[data-ansid="${answerId}"]`).disabled = false;
-    e.stopImmediatePropagation()
+      spanNumber.innerHTML = total
+      document.querySelector(`[data-id="${answerId}down"]`).disabled = false;
+      e.stopImmediatePropagation()
+    })
   })
 
-  downVote.addEventListener('click', async e => {
-    e.preventDefault();
-    const isUpvote = false
-    const body = { isUpvote }
+  downVotes.forEach(v => {
+    v.addEventListener('click', async e => {
 
-    const answerId = e.currentTarget.dataset.ansid
-    console.log(e.currentTarget)
-    e.currentTarget.disabled = true;
-    const response = await fetch(`http://localhost:8000/answers/${answerId}/votes`, {
-      method: "POST",
-      body: JSON.stringify(body),
-      headers: {
-        "Content-Type": "application/json",
+      e.preventDefault();
+      
+      const isUpvote = false
+      const body = { isUpvote }
+
+      const answerId = e.currentTarget.dataset.answerid
+      console.log(e.currentTarget)
+      e.currentTarget.disabled = true;
+      const response = await fetch(`http://localhost:8000/answers/${answerId}/votes`, {
+        method: "POST",
+        body: JSON.stringify(body),
+        headers: {
+          "Content-Type": "application/json",
+        }
+      });
+      const result = await response.json()
+
+      if (result.sameVote) return
+
+      let spanNumber = document.querySelector(`[data-id="${answerId}span"]`)
+      let total = parseInt(spanNumber.innerHTML)
+      if (total == 1) {
+        total = -1;
+      } else {
+        --total;
       }
-    });
-    const result = await response.json()
+      spanNumber.innerHTML = total
 
-    if (result.sameVote) return
-
-    let spanNumber = document.querySelector('.vote_count')
-    let total = parseInt(spanNumber.innerHTML)
-    if (total == 1) {
-      total = -1;
-    } else {
-      --total;
-    }
-    spanNumber.innerHTML = total
-
-    document.querySelector(`[data-answerid="${answerId}"]`).disabled = false;
-    e.stopImmediatePropagation()
+      document.querySelector(`[data-id="${answerId}up"]`).disabled = false;
+      e.stopImmediatePropagation()
+    })
   })
+
 })
