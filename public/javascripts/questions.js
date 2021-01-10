@@ -1,4 +1,6 @@
 window.addEventListener("load", (event) => {
+
+  //------------------------Answer Event-----------------------------//
   const form = document.querySelector("#answer_to_question")
   const yourAnswerHeader = document.querySelector('#yourAnswerHeader')
   const newErrorContainer = document.createElement('div')
@@ -12,8 +14,6 @@ window.addEventListener("load", (event) => {
     const questionId = formData.get("questionId")
     const body = { content, questionId }
 
-    // console.log(formData)
-
     const response = await fetch(`http://localhost:8000/question/${questionId}/answers`, {
       method: "POST",
       body: JSON.stringify(body),
@@ -24,49 +24,6 @@ window.addEventListener("load", (event) => {
 
     const answer = await response.json()
 
-
-
-    //------------------------util-functions-----------------------------//
-    const createNewElement = (ele, attributeType, attribute) => {
-      const newEle = document.createElement(ele)
-      newEle.setAttribute(attributeType, attribute)
-      return newEle
-    }
-
-
-    const createNewVote = () => {
-      const newVoteDiv = createNewElement('div', 'class', 'votes')
-
-      const newUpVote = createNewElement('button', 'class', 'button_votes')
-      const upvoteImg = createNewElement('img', 'class', 'resize')
-      upvoteImg.setAttribute('src', '../triangular-filled-up-arrow.png')
-
-      const newSpan = createNewElement('span', 'class', 'vote_count')
-
-      const newDownVote = createNewElement('button', 'class', 'button_votes')
-      const downvoteImg = createNewElement('img', 'class', 'resize')
-      downvoteImg.setAttribute('src', '../down-filled-triangular-arrow.png')
-
-      newUpVote.setAttribute('class', 'upVote button_votes')
-      newUpVote.setAttribute('data-answerid', 'answer.id')
-
-      newDownVote.setAttribute('class', 'downVote button_votes')
-      newDownVote.setAttribute('data-ansid', 'answer.id')
-
-      newUpVote.appendChild(upvoteImg)
-      newSpan.innerHTML = '0'                                                // replace this with actual count(?)
-      newDownVote.appendChild(downvoteImg)
-
-      newVoteDiv.appendChild(newUpVote)
-      newVoteDiv.appendChild(newSpan)
-      newVoteDiv.appendChild(newDownVote)
-
-      return newVoteDiv
-    }
-    //-------------------------------------------------------------------------//
-
-
-
     if (content) {
       let answersContainer = document.querySelector(".answers_container")
 
@@ -76,16 +33,10 @@ window.addEventListener("load", (event) => {
       const newAnsweredBy = createNewElement('p', 'class', 'answered_by')
 
       newAnswer.innerHTML = answer.content
-      // newAnsweredBy.setAttribute('style', 'text-align: center; display: table-cell; vertical-align: middle')
+
       newAnsweredBy.innerHTML = 'You answered'
 
-      newAnswerSection.appendChild(createNewVote())
-
-      // newUpButton.setAttribute('id', 'upVote')
-      // newUpButton.setAttribute('data-answerid', 'answer.id')
-
-      // newDownButton.setAttribute('id', 'downVote')
-      // newDownButton.setAttribute('data-ansid', 'answer.id')
+      newAnswerSection.appendChild(createNewVote(answer.id))
 
       newAnswerContainer.appendChild(newAnswer)
       newAnswerContainer.appendChild(newAnsweredBy)
@@ -111,99 +62,134 @@ window.addEventListener("load", (event) => {
     e.stopImmediatePropagation()
   })
 
-  // const vote = document.querySelectorAll('.vote_on_answer')
-  // const downVote = document.querySelector('#downVote')
-  // console.log(vote)
-  // vote.forEach( v => {
-  //   v.addEventListener('submit', e => {
-  //     e.preventDefault();
-  //     const voteType = e.currentTarget.dataset.votetype;
-  //     const answerId = e.currentTarget.dataset.answerid;
-
-  //     console.log(`voteType ${voteType}`)
-  //     console.log(`answerId ${answerId}`)
-
-  //     e.stopImmediatePropagation()
-  //   })
-  // })
-
+  //------------------------Vote Events-----------------------------//
   let upVotes = document.querySelectorAll('button.upVote')
   let downVotes = document.querySelectorAll('button.downVote')
 
-  // console.log(upVotes)
-  // console.log(downVotes)
-
-  upVotes.forEach(v => {
-    v.addEventListener('click', async e => {
-
-      e.preventDefault();
-
-      const isUpvote = true
-      const body = { isUpvote }
-
-      const answerId = e.currentTarget.dataset.answerid
-      // console.log(e.currentTarget)
-      e.currentTarget.disabled = true;
-
-      const response = await fetch(`http://localhost:8000/answers/${answerId}/votes`, {
-        method: "POST",
-        body: JSON.stringify(body),
-        headers: {
-          "Content-Type": "application/json",
-        }
-      });
-      const result = await response.json()
-
-
-      if (result.sameVote) return
-
-      let spanNumber = document.querySelector(`[data-id="${answerId}span"]`)
-      let total = parseInt(spanNumber.innerHTML)
-      if (total == -1) {
-        total = 1;
-      } else {
-        ++total;
-      }
-      spanNumber.innerHTML = total
-      document.querySelector(`[data-id="${answerId}down"]`).disabled = false;
-      e.stopImmediatePropagation()
-    })
+  upVotes.forEach( uv => {
+    upVoteAddEvent(uv);
   })
-
-  downVotes.forEach(v => {
-    v.addEventListener('click', async e => {
-
-      e.preventDefault();
-
-      const isUpvote = false
-      const body = { isUpvote }
-
-      const answerId = e.currentTarget.dataset.answerid
-      // console.log(e.currentTarget)
-      e.currentTarget.disabled = true;
-      const response = await fetch(`http://localhost:8000/answers/${answerId}/votes`, {
-        method: "POST",
-        body: JSON.stringify(body),
-        headers: {
-          "Content-Type": "application/json",
-        }
-      });
-      const result = await response.json()
-
-      if (result.sameVote) return
-
-      let spanNumber = document.querySelector(`[data-id="${answerId}span"]`)
-      let total = parseInt(spanNumber.innerHTML)
-      if (total == 1) {
-        total = -1;
-      } else {
-        --total;
-      }
-      spanNumber.innerHTML = total
-
-      document.querySelector(`[data-id="${answerId}up"]`).disabled = false;
-      e.stopImmediatePropagation()
-    })
+  downVotes.forEach( uv => {
+    downVoteAddEvent(uv);
   })
 
 })
+
+//------------------------util-functions-----------------------------//
+const createNewElement = (ele, attributeType, attribute) => {
+  const newEle = document.createElement(ele)
+  newEle.setAttribute(attributeType, attribute)
+  return newEle
+}
+
+
+const createNewVote = (answerId) => {
+  //element creation
+  const newVoteDiv = createNewElement('div', 'class', 'votes')
+  const newUpVote = createNewElement('button', 'class', 'button_votes')
+  const upvoteImg = createNewElement('img', 'class', 'resize')
+  const newSpan = createNewElement('span', 'class', 'vote_count')
+  const newDownVote = createNewElement('button', 'class', 'button_votes')
+  const downvoteImg = createNewElement('img', 'class', 'resize')
+
+  //attributes setup
+  newUpVote.setAttribute('class', 'upVote button_votes')
+  newUpVote.setAttribute('data-answerid', `${answerId}`)
+  newUpVote.setAttribute('data-id', `${answerId}up`)
+  upvoteImg.setAttribute('src', '../triangular-filled-up-arrow.png')
+
+  newSpan.setAttribute('data-id', `${answerId}span`)
+  newSpan.innerHTML = '0'
+
+  newDownVote.setAttribute('class', 'downVote button_votes')
+  newDownVote.setAttribute('data-answerid', `${answerId}`)
+  newDownVote.setAttribute('data-id', `${answerId}down`)
+  downvoteImg.setAttribute('src', '../down-filled-triangular-arrow.png')
+
+  //appending children
+  newUpVote.appendChild(upvoteImg)
+
+  newDownVote.appendChild(downvoteImg)
+
+  newVoteDiv.appendChild(newUpVote)
+  newVoteDiv.appendChild(newSpan)
+  newVoteDiv.appendChild(newDownVote)
+
+  //adding event listeners
+  upVoteAddEvent(newUpVote)
+  downVoteAddEvent(newDownVote)
+
+  return newVoteDiv
+}
+
+//------------------------Vote Event functions-----------------------------//
+
+function upVoteAddEvent(vote) {
+  //adding event listener to vote
+  vote.addEventListener('click', async e => {
+    e.preventDefault();
+    //setup for body of message
+    const isUpvote = true
+    const body = { isUpvote }
+    //aquiring data-answerid from button as well as disabling it
+    const answerId = e.currentTarget.dataset.answerid
+    e.currentTarget.disabled = true;
+    //fetching votes request and saving it to response variable
+    const response = await fetch(`http://localhost:8000/answers/${answerId}/votes`, {
+      method: "POST",
+      body: JSON.stringify(body),
+      headers: {
+        "Content-Type": "application/json",
+      }
+    });
+    //parsing response into result varialble
+    const result = await response.json()
+    console.log(result)
+    //checking if voter has already voted
+    if (result.sameVote) return
+    //acquiring span that displays vote data and sets innerhtml
+    let spanNumber = document.querySelector(`[data-id="${answerId}span"]`)
+    spanNumber.innerHTML = result.voteCount
+    //enables down button
+    document.querySelector(`[data-id="${answerId}down"]`).disabled = false;
+
+    e.stopImmediatePropagation()
+  })
+}
+
+function downVoteAddEvent(vote) {
+  //adding event listener to vote
+  vote.addEventListener('click', async e => {
+    e.preventDefault();
+    //setup for body of message
+    const isUpvote = false
+    const body = { isUpvote }
+    //aquiring data-answerid from button as well as disabling it
+    const answerId = e.currentTarget.dataset.answerid
+    e.currentTarget.disabled = true;
+    //fetching votes request and saving it to response variable
+    const response = await fetch(`http://localhost:8000/answers/${answerId}/votes`, {
+      method: "POST",
+      body: JSON.stringify(body),
+      headers: {
+        "Content-Type": "application/json",
+      }
+    });
+    //parsing response into result varialble
+    const result = await response.json()
+    console.log(result)
+    //checking if voter has already voted
+    if (result.sameVote) return
+    //acquiring span that displays vote data and sets innerhtml
+    let spanNumber = document.querySelector(`[data-id="${answerId}span"]`)
+    spanNumber.innerHTML = result.voteCount
+    //enables down button
+    document.querySelector(`[data-id="${answerId}up"]`).disabled = false;
+
+    e.stopImmediatePropagation()
+  })
+}
+
+
+
+
