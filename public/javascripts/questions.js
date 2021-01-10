@@ -130,8 +130,8 @@ window.addEventListener("load", (event) => {
   let upVotes = document.querySelectorAll('button.upVote')
   let downVotes = document.querySelectorAll('button.downVote')
 
-  console.log(upVotes)
-  console.log(downVotes)
+  // console.log(upVotes)
+  // console.log(downVotes)
 
   upVotes.forEach(v => {
     v.addEventListener('click', async e => {
@@ -142,7 +142,7 @@ window.addEventListener("load", (event) => {
       const body = { isUpvote }
 
       const answerId = e.currentTarget.dataset.answerid
-      console.log(e.currentTarget)
+      // console.log(e.currentTarget)
       e.currentTarget.disabled = true;
 
       const response = await fetch(`http://localhost:8000/answers/${answerId}/votes`, {
@@ -174,12 +174,12 @@ window.addEventListener("load", (event) => {
     v.addEventListener('click', async e => {
 
       e.preventDefault();
-      
+
       const isUpvote = false
       const body = { isUpvote }
 
       const answerId = e.currentTarget.dataset.answerid
-      console.log(e.currentTarget)
+      // console.log(e.currentTarget)
       e.currentTarget.disabled = true;
       const response = await fetch(`http://localhost:8000/answers/${answerId}/votes`, {
         method: "POST",
