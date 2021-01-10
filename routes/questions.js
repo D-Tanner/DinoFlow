@@ -99,12 +99,9 @@ router.get('/question/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, 
       ]
     }, { model: User, attributes: ['username'] }, { model: Answer, include: ['Votes'] }]
   })
-
   // const question = await Question.findByPk(questionId, { include: [{ model: Answer, include: [{ include: [{ model: User, attributes: ['username'] }] },
   // { model: User, attributes: ['username'] },
   // { model: Answer, include: ['Votes'] }] })
-
-
   for (let answer of question.Answers) {
     answer.dataValues.Votes = answer.Votes.reduce((acc, vote) => {
       if (vote.isUpvote) {
@@ -114,8 +111,13 @@ router.get('/question/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, 
     }, 0)
   }
 
+
+
   const sortedAnswers = question.Answers.sort((a, b) => {
-    if (a.createdAt > b.createdAt) {
+    //console.log("a   ", a.dataValues.Votes)
+    // console.log("b   ", b.dataValues.Votes)
+    if (a.dataValues.Votes <= b.dataValues.Votes) {
+      // if (a.createdAt > b.createdAt) {
       return 1
     } else {
       return -1
@@ -139,7 +141,7 @@ router.post('/question/:id(\\d+)/answers', answerValidators, asyncHandler(async 
   // console.log(questionId)
   // {userId} = Answer
   const { content } = req.body
-  console.log(req.session)
+  // console.log(req.session)
   const validatorErrors = validationResult(req)
   let errors = []
   if (validatorErrors.isEmpty()) {
