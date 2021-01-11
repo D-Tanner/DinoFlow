@@ -7,61 +7,62 @@ window.addEventListener("load", (event) => {
   const errorMessage = document.createElement('p')
   errorMessage.innerHTML = ''
 
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const formData = new FormData(form)
-    const content = formData.get("answer")
-    const questionId = formData.get("questionId")
-    const body = { content, questionId }
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form)
+      const content = formData.get("answer")
+      const questionId = formData.get("questionId")
+      const body = { content, questionId }
 
-    const response = await fetch(`/question/${questionId}/answers`, {
-      method: "POST",
-      body: JSON.stringify(body),
-      headers: {
-        "Content-Type": "application/json",
+      const response = await fetch(`/question/${questionId}/answers`, {
+        method: "POST",
+        body: JSON.stringify(body),
+        headers: {
+          "Content-Type": "application/json",
+        }
+      })
+
+      const answer = await response.json()
+
+      if (content) {
+        let answersContainer = document.querySelector(".answers_container")
+
+        const newAnswer = createNewElement('div', 'class', 'single_answers')
+        const newAnswerContainer = createNewElement('div', 'class', 'single_answers_container')
+        const newAnswerSection = createNewElement('div', 'class', 'answers_section')
+        const newAnsweredBy = createNewElement('p', 'class', 'answered_by')
+
+        newAnswer.innerHTML = answer.content
+
+        newAnsweredBy.innerHTML = 'You answered'
+
+        newAnswerSection.appendChild(createNewVote(answer.id))
+
+        newAnswerContainer.appendChild(newAnswer)
+        newAnswerContainer.appendChild(newAnsweredBy)
+        answersContainer.appendChild(newAnswerSection)
+        newAnswerSection.appendChild(newAnswerContainer)
+
+        errorMessage.innerHTML = ''
+        form.reset()
+
       }
+
+      if (!content && errorMessage.innerHTML === '') {
+
+        newErrorContainer.setAttribute('class', 'error_container')
+        errorMessage.setAttribute('class', 'error_message');
+
+        errorMessage.innerHTML = 'Cannot submit an answer without content'
+
+        yourAnswerHeader.appendChild(newErrorContainer)
+        newErrorContainer.appendChild(errorMessage)
+      }
+
+      e.stopImmediatePropagation()
     })
-
-    const answer = await response.json()
-
-    if (content) {
-      let answersContainer = document.querySelector(".answers_container")
-
-      const newAnswer = createNewElement('div', 'class', 'single_answers')
-      const newAnswerContainer = createNewElement('div', 'class', 'single_answers_container')
-      const newAnswerSection = createNewElement('div', 'class', 'answers_section')
-      const newAnsweredBy = createNewElement('p', 'class', 'answered_by')
-
-      newAnswer.innerHTML = answer.content
-
-      newAnsweredBy.innerHTML = 'You answered'
-
-      newAnswerSection.appendChild(createNewVote(answer.id))
-
-      newAnswerContainer.appendChild(newAnswer)
-      newAnswerContainer.appendChild(newAnsweredBy)
-      answersContainer.appendChild(newAnswerSection)
-      newAnswerSection.appendChild(newAnswerContainer)
-
-      errorMessage.innerHTML = ''
-      form.reset()
-
-    }
-
-    if (!content && errorMessage.innerHTML === '') {
-
-      newErrorContainer.setAttribute('class', 'error_container')
-      errorMessage.setAttribute('class', 'error_message');
-
-      errorMessage.innerHTML = 'Cannot submit an answer without content'
-
-      yourAnswerHeader.appendChild(newErrorContainer)
-      newErrorContainer.appendChild(errorMessage)
-    }
-
-    e.stopImmediatePropagation()
-  })
-
+  }
   //------------------------Vote Events-----------------------------//
   let upVotes = document.querySelectorAll('button.upVote')
   let downVotes = document.querySelectorAll('button.downVote')
