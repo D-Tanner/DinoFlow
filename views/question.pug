@@ -27,7 +27,7 @@ block content
           div(class="answers_section")
             div(class="votes")
               if locals.authenticated
-                button.upVote.button_votes(data-answerid=answer.id, data-id=answer.id+'up', data-votetype="upVote")
+                button.upVote.button_votes(data-answerid=answer.id, data-id=answer.id+'up', data-votetype="upVote", disabled=answer.dataValues.currUserUpVote)
                   img.resize(src='../triangular-filled-up-arrow.png')
               else
                 form(method='get' action="/users/login")
@@ -35,7 +35,7 @@ block content
                       img.resize(src='../triangular-filled-up-arrow.png')
               span(class='vote_count' data-id=answer.id+'span')= answer.dataValues.Votes
               if locals.authenticated
-                button.downVote.button_votes(data-answerid=answer.id, data-id=answer.id+'down' data-votetype="downVote")
+                button.downVote.button_votes( data-answerid=answer.id, data-id=answer.id+'down' data-votetype="downVote" disabled=answer.dataValues.currUserDownVote)
                   img.resize(src='../down-filled-triangular-arrow.png')
               else
                 form(method='get' action="/users/login")
