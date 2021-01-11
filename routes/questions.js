@@ -53,7 +53,7 @@ router.post('/ask-question', csrfProtection, questionValidators, asyncHandler(as
 
 router.get('/question/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => {
   const questionId = parseInt(req.params.id, 10)
-  // console.log(req.session.auth)
+  console.log(req.session)
   let userId;
   if (req.session.auth){
     userId = req.session.auth.userId
