@@ -81,6 +81,10 @@ button {
   border: none;
 }
 
+.button_votes[disabled]{
+  background-color: rgba(127, 131, 127, 0.3)
+}
+
 .vote_count{
   width: 100%;
   text-align: center;

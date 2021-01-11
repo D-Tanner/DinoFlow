@@ -53,6 +53,7 @@ router.post('/ask-question', csrfProtection, questionValidators, asyncHandler(as
 
 router.get('/question/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => {
   const questionId = parseInt(req.params.id, 10)
+  const userId = req.session.auth.userId
 
   //Sebastian's old query
   // const question = await Question.findByPk(questionId, {
@@ -103,15 +104,25 @@ router.get('/question/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, 
   // { model: User, attributes: ['username'] },
   // { model: Answer, include: ['Votes'] }] })
   for (let answer of question.Answers) {
+
+    answer.dataValues.currUserUpVote = false;
+    answer.dataValues.currUserDownVote = false;
+
     answer.dataValues.Votes = answer.Votes.reduce((acc, vote) => {
       if (vote.isUpvote) {
+        if (vote.userId == userId) {
+          answer.dataValues.currUserUpVote = true;
+        }
         return ++acc;
+      } else {
+        if (vote.userId == userId) {
+          answer.dataValues.currUserDownVote = true;
+        }
+        return --acc;
       }
-      return --acc;
     }, 0)
+
   }
-
-
 
   const sortedAnswers = question.Answers.sort((a, b) => {
     //console.log("a   ", a.dataValues.Votes)
