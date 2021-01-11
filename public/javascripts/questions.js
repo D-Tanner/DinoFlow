@@ -14,7 +14,7 @@ window.addEventListener("load", (event) => {
     const questionId = formData.get("questionId")
     const body = { content, questionId }
 
-    const response = await fetch(`http://localhost:8000/question/${questionId}/answers`, {
+    const response = await fetch(`/question/${questionId}/answers`, {
       method: "POST",
       body: JSON.stringify(body),
       headers: {
@@ -66,10 +66,10 @@ window.addEventListener("load", (event) => {
   let upVotes = document.querySelectorAll('button.upVote')
   let downVotes = document.querySelectorAll('button.downVote')
 
-  upVotes.forEach( uv => {
+  upVotes.forEach(uv => {
     upVoteAddEvent(uv);
   })
-  downVotes.forEach( uv => {
+  downVotes.forEach(uv => {
     downVoteAddEvent(uv);
   })
 
@@ -135,7 +135,7 @@ function upVoteAddEvent(vote) {
     const answerId = e.currentTarget.dataset.answerid
     e.currentTarget.disabled = true;
     //fetching votes request and saving it to response variable
-    const response = await fetch(`http://localhost:8000/answers/${answerId}/votes`, {
+    const response = await fetch(`/answers/${answerId}/votes`, {
       method: "POST",
       body: JSON.stringify(body),
       headers: {
@@ -168,7 +168,7 @@ function downVoteAddEvent(vote) {
     const answerId = e.currentTarget.dataset.answerid
     e.currentTarget.disabled = true;
     //fetching votes request and saving it to response variable
-    const response = await fetch(`http://localhost:8000/answers/${answerId}/votes`, {
+    const response = await fetch(`/answers/${answerId}/votes`, {
       method: "POST",
       body: JSON.stringify(body),
       headers: {
@@ -189,7 +189,3 @@ function downVoteAddEvent(vote) {
     e.stopImmediatePropagation()
   })
 }
-
-
-
-
