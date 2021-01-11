@@ -86,6 +86,7 @@ nav {
     margin-top: 2px;
     width: 65px;
     height: 42px;
+    padding-left: 9px;
 }
 
 #logout-button:hover {
