@@ -6,7 +6,6 @@ window.addEventListener("load", (event) => {
   const newErrorContainer = document.createElement('div')
   const errorMessage = document.createElement('p')
   errorMessage.innerHTML = ''
-
   if (form) {
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
