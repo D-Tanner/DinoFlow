@@ -16,8 +16,7 @@ html
             input#search(name='term' value='' type='text' placeholder='Search...')
         div.userButtons
           if locals.authenticated
-            div.username
-              h2= locals.user.username
+            div.username Welcome, #{locals.user.username}!
             form(action="/users/logout", method="post")
               button#logout-button(type="submit") Logout
           else

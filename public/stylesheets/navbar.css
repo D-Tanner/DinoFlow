@@ -11,6 +11,23 @@ nav {
     box-shadow: 1px 1px 5px 1px gray;
 }
 
+.username {
+    height: 100%;
+    vertical-align: middle;
+    float: left;
+    color: #3c4146;
+    text-align: center;
+    padding: 0px 0px 0px 0px;
+    text-decoration: none;
+    transition-duration: 0.2s;
+    width: 25rem;
+    height: 40px;
+    border-radius: 10px;
+    margin: 0.25rem 1rem 0 0.25rem;
+    padding-top: 6px;
+
+}
+
 .userButtons > a {
     float: right;
     display: block;
