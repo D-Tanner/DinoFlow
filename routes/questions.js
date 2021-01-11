@@ -53,7 +53,11 @@ router.post('/ask-question', csrfProtection, questionValidators, asyncHandler(as
 
 router.get('/question/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => {
   const questionId = parseInt(req.params.id, 10)
-  const userId = req.session.auth.userId
+  // console.log(req.session.auth)
+  let userId;
+  if (req.session.auth){
+    userId = req.session.auth.userId
+  }
 
   //Sebastian's old query
   // const question = await Question.findByPk(questionId, {
@@ -110,14 +114,16 @@ router.get('/question/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, 
 
     answer.dataValues.Votes = answer.Votes.reduce((acc, vote) => {
       if (vote.isUpvote) {
-        if (vote.userId == userId) {
-          answer.dataValues.currUserUpVote = true;
-        }
+        if(userId)
+          if (vote.userId == userId && req.session.auth.userId) {
+            answer.dataValues.currUserUpVote = true;
+          }
         return ++acc;
       } else {
-        if (vote.userId == userId) {
-          answer.dataValues.currUserDownVote = true;
-        }
+        if(userId)
+          if (vote.userId == userId) {
+            answer.dataValues.currUserDownVote = true;
+          }
         return --acc;
       }
     }, 0)
