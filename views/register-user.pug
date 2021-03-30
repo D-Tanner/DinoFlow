@@ -13,7 +13,7 @@ block content
   div(class="body")
     div(class="body_content")
       h1 Create an account
-      form(action='/users/register' method='post')
+      form(class="form-signup-login" action='/users/register' method='post')
         input(type='hidden' name='_csrf' value=csrfToken)
         +field('', 'username', user.username, 'text', 'Dinosaur', 'username')
         +field('', 'email', user.email, 'email', 'Email', 'email')

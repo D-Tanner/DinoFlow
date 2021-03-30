@@ -10,7 +10,7 @@ block content
     div(class="body")
         div(class="body_content")
             h1 Login
-            form(id="form" action='/users/login' method='post')
+            form(class="form-signup-login" action='/users/login' method='post')
                 input(type='hidden' name='_csrf' value=csrfToken)
                 +field(null, 'email', email , 'email', 'Email', 'email')
                 +field(null, 'password', '', 'password', 'Password', 'password')
