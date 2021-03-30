@@ -23,7 +23,7 @@ module.exports = {
       { username: 'chomper42', email: faker.internet.email(), hashedPassword: bcrypt.hashSync(faker.internet.password()), createdAt: new Date(), updatedAt: new Date() },
       { username: 'dino-mite', email: faker.internet.email(), hashedPassword: bcrypt.hashSync(faker.internet.password()), createdAt: new Date(), updatedAt: new Date() },
       { username: 'EDosaurus', email: faker.internet.email(), hashedPassword: bcrypt.hashSync(faker.internet.password()), createdAt: new Date(), updatedAt: new Date() },
-      { username: 'TimmyTheTriceratops', email: faker.internet.email(), hashedPassword: bcrypt.hashSync(faker.internet.password()), createdAt: new Date(), updatedAt: new Date() },
+      { username: 'TimmyTheTriceratops', email: faker.internet.email(), hashedPassword: bcrypt.hashSync("password"), createdAt: new Date(), updatedAt: new Date() },
       { username: 'Bronto-Thunder', email: faker.internet.email(), hashedPassword: bcrypt.hashSync(faker.internet.password()), createdAt: new Date(), updatedAt: new Date() },
       { username: 'little-arms-anonymous', email: faker.internet.email(), hashedPassword: bcrypt.hashSync(faker.internet.password()), createdAt: new Date(), updatedAt: new Date() },
       { username: 'pete_the_pterodactyl', email: faker.internet.email(), hashedPassword: bcrypt.hashSync(faker.internet.password()), createdAt: new Date(), updatedAt: new Date() },

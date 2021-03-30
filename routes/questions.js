@@ -53,37 +53,11 @@ router.post('/ask-question', csrfProtection, questionValidators, asyncHandler(as
 
 router.get('/question/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => {
   const questionId = parseInt(req.params.id, 10)
-  console.log(req.session)
+  // console.log(req.session)
   let userId;
-  if (req.session.auth){
+  if (req.session.auth) {
     userId = req.session.auth.userId
   }
-
-  //Sebastian's old query
-  // const question = await Question.findByPk(questionId, {
-  //   include: [
-  //     {
-  //       model: Answer,
-  //       include: [
-  //         {
-  //           model: User,
-  //           attributes: [
-  //             'username'
-  //           ]
-  //         }
-  //       ],
-  //     },
-  //     {
-  //       model: User,
-  //       attributes: [
-  //         'username'
-  //       ]
-  //     },
-  //   ]
-  // })
-
-  //Original
-  //const question = await Question.findByPk(questionId, { include: [{ model: User, attributes: ['username'] }, { model: Answer, include: ['Votes'] }] })
 
   const question = await Question.findByPk(questionId, {
     include: [{
@@ -114,13 +88,13 @@ router.get('/question/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, 
 
     answer.dataValues.Votes = answer.Votes.reduce((acc, vote) => {
       if (vote.isUpvote) {
-        if(userId)
+        if (userId)
           if (vote.userId == userId && req.session.auth.userId) {
             answer.dataValues.currUserUpVote = true;
           }
         return ++acc;
       } else {
-        if(userId)
+        if (userId)
           if (vote.userId == userId) {
             answer.dataValues.currUserDownVote = true;
           }
@@ -179,6 +153,33 @@ router.post('/question/:id(\\d+)/answers', answerValidators, asyncHandler(async 
 
 }))
 
+router.get('/question/:id(\\d+)/edit', csrfProtection, asyncHandler(async (req, res, next) => {
+  const questionId = Number(req.params.id)
+  const question = await Question.findByPk(questionId)
+  res.render('edit-question', { title: 'Ask a Question', question, csrfToken: req.csrfToken() })
+}))
 
+router.patch('/question/:id(\\d+)', questionValidators, asyncHandler(async (req, res, next) => {
+  const questionId = Number(req.params.id)
+  const question = await Question.findByPk(questionId)
+
+  const { title, content } = req.body;
+  console.log('TITLE AND CONTENT!@!@#!@!#@', title, content)
+  let errors = [];
+
+  const validatorErrors = validationResult(req);
+
+  if (validatorErrors.isEmpty()) {
+    //I need to assign a question ID for each question that is posted ???
+    await question.update({ title, content })
+    // const question = await Question.findByPk() // ?????????????
+    return res.redirect(`/question/${questionId}`)
+  } else {
+    errors = validatorErrors.array().map((error) => error.msg)
+  }
+
+}))
+
+// router.delete('/question/:id(\\d+)')
 
 module.exports = router;

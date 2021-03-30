@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs');// Hashing passwords
 
 const { check, validationResult } = require('express-validator')
 const { csrfProtection, asyncHandler } = require('./utils')
-const { loginUser, logoutUser } = require('../auth')
+const { loginUser, logoutUser, demoLogin } = require('../auth')
 
 const db = require('../db/models')
 const { User } = db
@@ -126,7 +126,7 @@ router.post('/login', csrfProtection, loginValidators, asyncHandler(async (req, 
 
   if (validatorErrors.isEmpty()) {
     const user = await User.findOne({ where: { email } })
-    
+
     if (user !== null) {
       const passwordMatch = await bcrypt.compare(password, user.hashedPassword.toString());
 
@@ -154,6 +154,15 @@ router.post('/login', csrfProtection, loginValidators, asyncHandler(async (req, 
   })
 
 }));
+router.post('/login/demo', csrfProtection, loginValidators, asyncHandler(async (req, res) => {
+  const username = "TimmyTheTriceratops"
+  const user = await User.findOne({ where: { username } })
+
+  loginUser(req, res, user);
+  return res.redirect('/');
+
+}));
+
 
 router.post('/logout', (req, res) => {
   logoutUser(req, res);
