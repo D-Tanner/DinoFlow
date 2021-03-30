@@ -53,6 +53,6 @@ block content
           input(type='hidden' name='_csrf' value=csrfToken)
           input(type='hidden' name='questionId' value=question.id)
           +field('', 'answer', answer, 'textarea', 'Write your answer here')
-          div
+          div(class="buttons")
             button(type='submit' id="answer_button") Post Your Answer
-            a(href='/') Cancel
+            a(class="cancel_button" href='/') Cancel
