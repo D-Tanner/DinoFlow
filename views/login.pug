@@ -10,13 +10,16 @@ block content
     div(class="body")
         div(class="body_content")
             h1 Login
-            form(class="form-signup-login" action='/users/login' method='post')
-                input(type='hidden' name='_csrf' value=csrfToken)
-                +field(null, 'email', email , 'email', 'Email', 'email')
-                +field(null, 'password', '', 'password', 'Password', 'password')
-                div
-                    button(id='login_button' name='submit' type='submit') Login
-                    //- div(id="cancel_button-space")
-                    //-     a(id="cancel_button" href='/') Cancel
+            div(class="form-signup-login")
+                form(class="form-signup-login" action='/users/login' method='post')
+                    input(type='hidden' name='_csrf' value=csrfToken)
+                    +field(null, 'email', email , 'email', 'Email', 'email')
+                    +field(null, 'password', '', 'password', 'Password', 'password')
+                    div
+                        button(id='login_button' name='submit' type='submit') Login
+
+                        //- div(id="cancel_button-space")
+                        //-     a(id="cancel_button" href='/') Cancel
+                button(id='login_button' name='submit' type='submit') Demo Login
                 div
                     p: a(id='signup_link' href='/users/register') Don't have an account?
