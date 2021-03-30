@@ -20,6 +20,8 @@ block content
 
                         //- div(id="cancel_button-space")
                         //-     a(id="cancel_button" href='/') Cancel
-                button(id='login_button' name='submit' type='submit') Demo Login
+                form(action="/users/login/demo" method="post")
+                    input(type='hidden' name='_csrf' value=csrfToken)
+                    button(id='login_button' name='submit' type='submit') Demo Login
                 div
                     p: a(id='signup_link' href='/users/register') Don't have an account?
