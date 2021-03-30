@@ -155,8 +155,10 @@ router.post('/login', csrfProtection, loginValidators, asyncHandler(async (req, 
 
 }));
 router.post('/login/demo', csrfProtection, loginValidators, asyncHandler(async (req, res) => {
+  const username = "TimmyTheTriceratops"
+  const user = await User.findOne({ where: { username } })
 
-  demoLogin(req, res);
+  loginUser(req, res, user);
   return res.redirect('/');
 
 }));
