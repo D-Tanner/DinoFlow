@@ -20,8 +20,8 @@ block content
         p(class='user_info' style='text-align: right; color: black; font-weight: normal;') Asked by #[a.user_info= question.User.username]
         hr
         p(id="question_content_text")= question.content
-        if locals.user.id === question.userId
-          div(class='flex_container')
+        //- if locals.user.id === question.userId
+        //-   div(class='flex_container')
             //- a(class="edit_button" href=`/question/${question.id}/edit`) Edit Question
       h2 Answers
 
@@ -29,25 +29,32 @@ block content
         each answer in answers
           div(class="answers_section")
             div(class="votes")
+              //- upvote button
               if locals.authenticated
-                button.upVote.button_votes(data-answerid=answer.id, data-id=answer.id+'up', data-votetype="upVote", disabled=answer.dataValues.currUserUpVote)
+                button.upVote.button_votes(data-answerid=answer.id, data-id=answer.id+'up', data-votetype="upVote", voted=answer.dataValues.currUserUpVote ? 'true':'false')
                   img.resize(src='../triangular-filled-up-arrow.png')
               else
                 form(method='get' action="/users/login")
                   button.button_votes
                       img.resize(src='../triangular-filled-up-arrow.png')
+              //- vote count
               span(class='vote_count' data-id=answer.id+'span')= answer.dataValues.Votes
+              //- downvote button
               if locals.authenticated
-                button.downVote.button_votes( data-answerid=answer.id, data-id=answer.id+'down' data-votetype="downVote" disabled=answer.dataValues.currUserDownVote)
+                button.downVote.button_votes( data-answerid=answer.id, data-id=answer.id+'down' data-votetype="downVote" voted=answer.dataValues.currUserDownVote ? 'true': 'false')
                   img.resize(src='../down-filled-triangular-arrow.png')
               else
                 form(method='get' action="/users/login")
                   button.button_votes
                       img.resize(src='../down-filled-triangular-arrow.png')
+            //- Answer Content / user
             div(class='single_answers_container')
               div(class="single_answers")= answer.dataValues.content
               p(class='answered_by' style='text-align: center') Answered by #[a.user_info= answer.User.username]
-
+              if locals.user
+                if locals.user.id === answer.userId 
+                  button.button_delete( data-answerid=answer.id) Delete
+                  button.button_edit( data-answerid=answer.id) Edit
 
       if locals.authenticated
         //- +validationErrorSummary(errors)

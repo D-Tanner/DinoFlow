@@ -26,8 +26,8 @@ module.exports = {
       //   fields: ['userId', 'answerId', 'downvotes']
       // }],
       isUpvote: {
-        allowNull: false,
-        type: Sequelize.BOOLEAN
+        allowNull: true,
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
