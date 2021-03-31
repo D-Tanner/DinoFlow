@@ -13,7 +13,7 @@ block content
     +validationErrorSummary(errors)
     div(class="body")
       div(class="question_form_content")
-        form(action=`/question/${question.id}` method='patch' id="ask-question-page")
+        form(action=`/question/${question.id}/edit-question` method='post' id="ask-question-page")
           input(type='hidden' name='_csrf' value=csrfToken)
           +field('Title', 'title', question.title, 'text', 'ex: Is this pterodactyl safe to eat?', 'question_title')
           div(class="gimme_space")
@@ -21,8 +21,8 @@ block content
           div(class="buttons")
             button(type='submit' id='post_a_question') Update Your Question
             a(href='/' id="cancel") Cancel
-        form(action='/delete-question' method='delete')
-            button(type='submit' id='delete_question') Delete Question
+        //- form(action='/delete-question' method='delete')
+            //- button(type='submit' id='delete_question') Delete Question
   else
     div.login_alert
       h1 You must be logged in to ask a question on DinoFlow
