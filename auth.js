@@ -5,8 +5,15 @@ const loginUser = (req, res, user) => {
     userId: user.id,
     userName: user.username,
   };
-  console.log(user)
+
 };
+
+const demoLogin = (req, res) => {
+  req.session.auth = {
+    userId: 5,
+    userName: "TimmyTheTriceratops",
+  }
+}
 
 const logoutUser = (req, res) => {
   delete req.session.auth;
@@ -48,6 +55,7 @@ const restoreUser = async (req, res, next) => {
 module.exports = {
   loginUser,
   logoutUser,
+  demoLogin,
   requireAuth,
   restoreUser,
 };

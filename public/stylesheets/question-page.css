@@ -24,7 +24,9 @@ h2 {
 }
 
 button {
+
     margin-right: 20px;
+
 }
 
 .answers_section {
@@ -34,6 +36,7 @@ button {
 }
 
 .single_answers_container {
+
     display: grid;
     grid-template-columns: 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5%;
     grid-template-rows: 100%;
@@ -64,6 +67,29 @@ button {
     color: black;
 }
 
+.single_answers_buttons {
+  /* display: flex; */
+  margin: 0 auto;
+  grid-area: answerButtons;
+}
+
+.button_delete {
+  grid-area: answerDelete;
+}
+
+.button_edit {
+  grid-area: answerEdit;
+}
+.button_delete, .button_edit {
+  position: relative;
+  top: -1em;
+  float: right;
+  height: 1.5em;
+  width: 4em;
+  /* margin-right: .5em; */
+  margin: auto;
+}
+
 .votes {
     margin-left: 0;
     float: left;
@@ -78,13 +104,19 @@ button {
     border: none;
 }
 
-.button_votes[disabled] {
-    background-color: rgba(127, 131, 127, 0.3);
+
+.button_votes[voted=true]{
+  background-color: rgba(127, 131, 127, 0.3)
 }
 
-.vote_count {
-    width: 100%;
-    text-align: center;
+.button_votes:focus {
+  outline: none;
+}
+
+.vote_count{
+  width: 100%;
+  text-align: center;
+
 }
 
 .error_message {
@@ -98,15 +130,52 @@ textarea {
 }
 
 #answer_button {
+
     background-color: #0095ff;
     color: white;
     height: 30px;
     width: 150px;
+
+    font-size: 15px;
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.4);
     transition-duration: 0.2s;
+    margin: 20px;
+    padding: 10px;
+    text-decoration: none;
+    min-width: 173px;
+    text-overflow: clip;
+    overflow: hidden;
+    white-space: nowrap;
+
 }
 
 #answer_button:hover {
     background-color: rgb(137, 193, 245);
+}
+
+.cancel_button {
+    color: white;
+    font-size: 15px;
+    text-align: center;
+    vertical-align: center;
+    background-color: #9b1a1a;
+    border-radius: 5px;
+    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.4);
+    height: 44px;
+    transition-duration: 0.2s;
+    padding: 10px;
+    text-decoration: none;
+    min-width: 83px;
+    text-overflow: clip;
+    overflow: hidden;
+    white-space: nowrap;
+    line-height: 24px;
+}
+
+.cancel_button:hover {
+    background-color: rgb(228, 15, 15);
 }
 
 .resize {
@@ -116,4 +185,43 @@ textarea {
 
 .container > * {
     padding: 50px;
+}
+
+.buttons {
+  margin: 0 auto;
+  width: 90%;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+.flex_container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.edit_button {
+  color: white;
+    font-size: 14px;
+    text-align: center;
+    background-color: #0077cc;
+    border-radius: 5px;
+    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.4);
+    height: 44px;
+    transition-duration: 0.2s;
+    margin-right: 5px;
+    padding: 10px;
+    text-decoration: none;
+    float: left;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.edit_button:hover {
+  background-color: rgb(137, 193, 245);
+}
+
+#delete_question {
+  border: none;
 }

@@ -72,6 +72,15 @@ window.addEventListener("load", (event) => {
   downVotes.forEach(uv => {
     downVoteAddEvent(uv);
   })
+  //---------------Answer Post Creation Handling--------------------//
+  let editButtons = document.querySelectorAll('button.button_edit')
+  let deleteButtons = document.querySelectorAll('button.button_delete')
+  editButtons.forEach(button => {
+    editAnswerAddEvent(button);
+  })
+  deleteButtons.forEach(button => {
+    deleteAnswerAddEvent(button);
+  })
 
 })
 
@@ -133,7 +142,9 @@ function upVoteAddEvent(vote) {
     const body = { isUpvote }
     //aquiring data-answerid from button as well as disabling it
     const answerId = e.currentTarget.dataset.answerid
-    e.currentTarget.disabled = true;
+    // setting vote element to variable
+    const currVote = e.currentTarget
+    currVote.setAttribute('voted', true)
     //fetching votes request and saving it to response variable
     const response = await fetch(`/answers/${answerId}/votes`, {
       method: "POST",
@@ -144,14 +155,19 @@ function upVoteAddEvent(vote) {
     });
     //parsing response into result varialble
     const result = await response.json()
-    console.log(result)
+    
     //checking if voter has already voted
-    if (result.sameVote) return
+    if (result.response.sameVote) {
+      currVote.setAttribute('voted', false);
+      let spanNumber = document.querySelector(`[data-id="${answerId}span"]`)
+      spanNumber.innerHTML = result.voteCount
+      return;
+    }
     //acquiring span that displays vote data and sets innerhtml
     let spanNumber = document.querySelector(`[data-id="${answerId}span"]`)
     spanNumber.innerHTML = result.voteCount
     //enables down button
-    document.querySelector(`[data-id="${answerId}down"]`).disabled = false;
+    document.querySelector(`[data-id="${answerId}down"]`).setAttribute('voted', false ) ;
 
     e.stopImmediatePropagation()
   })
@@ -166,7 +182,9 @@ function downVoteAddEvent(vote) {
     const body = { isUpvote }
     //aquiring data-answerid from button as well as disabling it
     const answerId = e.currentTarget.dataset.answerid
-    e.currentTarget.disabled = true;
+    // setting vote element to variable
+    const currVote = e.currentTarget
+    currVote.setAttribute('voted', true)
     //fetching votes request and saving it to response variable
     const response = await fetch(`/answers/${answerId}/votes`, {
       method: "POST",
@@ -177,15 +195,47 @@ function downVoteAddEvent(vote) {
     });
     //parsing response into result varialble
     const result = await response.json()
-    console.log(result)
+    
     //checking if voter has already voted
-    if (result.sameVote) return
+    if (result.response.sameVote) {
+      currVote.setAttribute('voted', false);
+      let spanNumber = document.querySelector(`[data-id="${answerId}span"]`)
+      spanNumber.innerHTML = result.voteCount
+      return;
+    }
     //acquiring span that displays vote data and sets innerhtml
     let spanNumber = document.querySelector(`[data-id="${answerId}span"]`)
     spanNumber.innerHTML = result.voteCount
     //enables down button
-    document.querySelector(`[data-id="${answerId}up"]`).disabled = false;
+    document.querySelector(`[data-id="${answerId}up"]`).setAttribute('voted', false);
 
     e.stopImmediatePropagation()
   })
+}
+
+//------------------------Answer Handling Event functions-----------------------------//
+
+function editAnswerAddEvent(button){
+  button.addEventListener('click', async e => {
+    e.preventDefault();
+    const answerId = e.currentTarget.dataset.answerid
+    return console.log('Answer Edit', answerId);
+  })
+  
+}
+function deleteAnswerAddEvent(button){
+  button.addEventListener('click', async e => {
+    e.preventDefault();
+    const answerId = e.currentTarget.dataset.answerid;
+    
+
+    const response = await fetch(`/answers/${answerId}`, {
+      method: "DELETE",
+    });
+
+    const result = await response.json()
+
+    return result;
+  })
+  
 }

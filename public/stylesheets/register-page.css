@@ -5,6 +5,10 @@
   align-items: center;
 }
 
+.form-signup-login {
+  width: 500px;
+}
+
 a {
   text-decoration: none;
 }

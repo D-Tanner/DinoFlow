@@ -15,7 +15,7 @@ html
             img(src="/logo.PNG" id="logo_image")
         div.searchContainer
           form(action='/search' method='GET')
-            input#search(name='term' value='' type='text' placeholder='Search...')
+            input#search(name='term' value='' type='search' placeholder='Search...')
         div.userButtons
           if locals.authenticated
             div.username Welcome, #{locals.user.username}!

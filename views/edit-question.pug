@@ -1,0 +1,28 @@
+extends layout.pug
+
+include utils.pug
+
+append head
+  //- add page specific styles by appending to the head
+  link(rel="stylesheet" href="/stylesheets/ask-question-page.css")
+  //- add page specific js
+  script(src="/javascripts/index.js" type="module" defer)
+
+block content
+  if locals.authenticated
+    +validationErrorSummary(errors)
+    div(class="body")
+      div(class="question_form_content")
+        form(action=`/question/${question.id}/edit-question` method='post' id="ask-question-page")
+          input(type='hidden' name='_csrf' value=csrfToken)
+          +field('Title', 'title', question.title, 'text', 'ex: Is this pterodactyl safe to eat?', 'question_title')
+          div(class="gimme_space")
+          +field('Content', 'content', question.content, 'textarea', 'ex: I found this dead in the woods but it looks bony, I am hungry.', 'question_content')
+          div(class="buttons")
+            button(type='submit' id='post_a_question') Update Your Question
+            a(href='/' id="cancel") Cancel
+
+  else
+    div.login_alert
+      h1 You must be logged in to ask a question on DinoFlow
+        p #[a(href='/users/login' style='color: blue') Log in] or #[a(href='/users/register' style='color: blue') sign up]
