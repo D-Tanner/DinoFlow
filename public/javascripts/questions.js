@@ -72,6 +72,15 @@ window.addEventListener("load", (event) => {
   downVotes.forEach(uv => {
     downVoteAddEvent(uv);
   })
+  //---------------Answer Post Creation Handling--------------------//
+  let editButtons = document.querySelectorAll('button.button_edit')
+  let deleteButtons = document.querySelectorAll('button.button_delete')
+  editButtons.forEach(button => {
+    editAnswerAddEvent(button);
+  })
+  deleteButtons.forEach(button => {
+    deleteAnswerAddEvent(button);
+  })
 
 })
 
@@ -202,4 +211,31 @@ function downVoteAddEvent(vote) {
 
     e.stopImmediatePropagation()
   })
+}
+
+//------------------------Answer Handling Event functions-----------------------------//
+
+function editAnswerAddEvent(button){
+  button.addEventListener('click', async e => {
+    e.preventDefault();
+    const answerId = e.currentTarget.dataset.answerid
+    return console.log('Answer Edit', answerId);
+  })
+  
+}
+function deleteAnswerAddEvent(button){
+  button.addEventListener('click', async e => {
+    e.preventDefault();
+    const answerId = e.currentTarget.dataset.answerid;
+    
+
+    const response = await fetch(`/answers/${answerId}`, {
+      method: "DELETE",
+    });
+
+    const result = await response.json()
+
+    return result;
+  })
+  
 }

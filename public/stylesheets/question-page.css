@@ -24,7 +24,7 @@ h2 {
 }
 
 button {
-  margin-right: 20px;
+  /* margin-right: 20px; */
 }
 
 .answers_section {
@@ -35,10 +35,11 @@ button {
 
 .single_answers_container {
   display: grid;
-  grid-template-columns: 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5%;
+  /* grid-template-columns: 1fr 5fr 1fr 1fr; */
+  grid-template-columns: 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 6% 6%;
   grid-template-rows: 100%;
   grid-template-areas:
-    'answer answer answer answer answer answer answer answered'
+    'answer answer answer answer answer answer answer answered answerDelete answerEdit'
     ;
   width: 100%;
 }
@@ -64,6 +65,29 @@ button {
   vertical-align: middle;
   align-self: center;
   color: black;
+}
+
+.single_answers_buttons {
+  /* display: flex; */
+  margin: 0 auto;
+  grid-area: answerButtons;
+}
+
+.button_delete {
+  grid-area: answerDelete;
+}
+
+.button_edit {
+  grid-area: answerEdit;
+}
+.button_delete, .button_edit {
+  position: relative;
+  top: -1em;
+  float: right;
+  height: 1.5em;
+  width: 4em;
+  /* margin-right: .5em; */
+  margin: auto;
 }
 
 .votes {

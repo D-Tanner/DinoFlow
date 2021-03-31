@@ -37,7 +37,7 @@ router.post("/answers/:id(\\d+)/votes", asyncHandler(async (req, res) => {
             {
                 userId,
                 answerId,
-                isUpvote
+                isUpvote: isUpvote ? 1 : -1,
             }
         )
         //checks for upvote or downvote and updates vote count

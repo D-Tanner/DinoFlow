@@ -124,6 +124,7 @@ router.get('/question/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, 
   //const question = await Question.findByPk(questionId, { include: ['Answers', { model: User, attributes: ['username'] }] })
 
   
+  
   res.render('question', { title: 'Question', question, answers: question.Answers, sortedAnswers, csrfToken: req.csrfToken() },)
 
 }));
@@ -155,6 +156,47 @@ router.post('/question/:id(\\d+)/answers', answerValidators, asyncHandler(async 
   }
 
   res.json({ errors })
+
+}))
+
+// PATCH ANSWER
+router.patch('/question/:id(\\d+)/answers/:id(\\d+)', answerValidators, asyncHandler(async (req, res, next) => {
+  // const questionId = parseInt(req.params.id, 10)
+  
+  // // {userId} = Answer
+  // const { content } = req.body
+  
+  // const validatorErrors = validationResult(req)
+  // let errors = []
+  // if (validatorErrors.isEmpty()) {
+  //   const ans = await Answer.create(
+  //     {
+  //       content,
+  //       questionId,
+  //       userId: req.session.auth.userId
+  //     }
+  //   )
+  //   return res.json(ans)
+  // }
+  // else {
+  //   errors = validatorErrors.array().map(err => err.msg)
+  // }
+
+  // res.json({ errors })
+
+}))
+
+// DELETE ANSWER
+router.delete('/answers/:id(\\d+)', answerValidators, asyncHandler(async (req, res, next) => {
+  const answerId = parseInt(req.params.id, 10)
+
+  console.log(answerId)
+  
+  const answer = await Answer.findOne({ where: {id : answerId}})
+  // await Answer.destroy({answer});
+  await answer.destroy();
+
+  res.json({ 'message':`${answerId} Deleted` })
 
 }))
 
