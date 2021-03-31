@@ -27,7 +27,7 @@ block content
 
       div.answers_container
         each answer in answers
-          div(class="answers_section")
+          div(class="answers_section" data-answerid=answer.id)
             div(class="votes")
               //- upvote button
               if locals.authenticated
@@ -48,7 +48,7 @@ block content
                   button.button_votes
                       img.resize(src='../down-filled-triangular-arrow.png')
             //- Answer Content / user
-            div(class='single_answers_container')
+            div(class='single_answers_container' )
               div(class="single_answers")= answer.dataValues.content
               p(class='answered_by' style='text-align: center') Answered by #[a.user_info= answer.User.username]
               if locals.user

@@ -72,8 +72,5 @@ async function countVotes(answerId) {
 //     res.json(voteExists)
 // }))
 
-router.delete("/answers/:id(\\d+)/votes", asyncHandler(async (req, res) => {
-
-}));
 
 module.exports = router

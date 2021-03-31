@@ -234,7 +234,10 @@ function deleteAnswerAddEvent(button){
     });
 
     const result = await response.json()
-
+    const answer = document.querySelector(`div[data-answerid=${answerId}]`);
+    console.log(answer)
+    answer.remove();
+    
     return result;
   })
   
