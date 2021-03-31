@@ -20,9 +20,15 @@ block content
         p(class='user_info' style='text-align: right; color: black; font-weight: normal;') Asked by #[a.user_info= question.User.username]
         hr
         p(id="question_content_text")= question.content
-        //- if locals.user.id === question.userId
-        //-   div(class='flex_container')
-            //- a(class="edit_button" href=`/question/${question.id}/edit`) Edit Question
+
+        if locals.authenticated && locals.user.id === question.userId
+          div(class='flex_container')
+            div
+              a(class="edit_button" href=`/question/${question.id}/edit`) Edit
+            div
+              form(action=`/question/${question.id}/delete` method='post')
+                button(type='submit' class='cancel_button' id='delete_question') Delete
+
       h2 Answers
 
       div.answers_container
@@ -52,7 +58,7 @@ block content
               div(class="single_answers")= answer.dataValues.content
               p(class='answered_by' style='text-align: center') Answered by #[a.user_info= answer.User.username]
               if locals.user
-                if locals.user.id === answer.userId 
+                if locals.user.id === answer.userId
                   button.button_delete( data-answerid=answer.id) Delete
                   button.button_edit( data-answerid=answer.id) Edit
 

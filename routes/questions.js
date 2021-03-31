@@ -53,7 +53,7 @@ router.post('/ask-question', csrfProtection, questionValidators, asyncHandler(as
 
 router.get('/question/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => {
   const questionId = parseInt(req.params.id, 10)
-  
+
   let userId;
   if (req.session.auth) {
     userId = req.session.auth.userId
@@ -88,16 +88,16 @@ router.get('/question/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, 
 
     answer.dataValues.Votes = answer.Votes.reduce((acc, vote) => {
       const value = vote.isUpvote;
-      
+
       if (value == 1) {
-        
+
         if (userId)
           if (vote.userId == userId && req.session.auth.userId) {
             answer.dataValues.currUserUpVote = true;
           }
         return acc += 1;
       } else if (value == -1) {
-        
+
         if (userId)
           if (vote.userId == userId) {
             answer.dataValues.currUserDownVote = true;
@@ -108,10 +108,10 @@ router.get('/question/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, 
     }, 0)
   }
 
-  
+
 
   const sortedAnswers = question.Answers.sort((a, b) => {
-   
+
     if (a.dataValues.Votes <= b.dataValues.Votes) {
       // if (a.createdAt > b.createdAt) {
       return 1
@@ -120,11 +120,10 @@ router.get('/question/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, 
     }
   })
 
-  //previous main's question query that was replaced by Juan and Lu's query
-  //const question = await Question.findByPk(questionId, { include: ['Answers', { model: User, attributes: ['username'] }] })
 
-  
-  
+
+
+
   res.render('question', { title: 'Question', question, answers: question.Answers, sortedAnswers, csrfToken: req.csrfToken() },)
 
 }));
@@ -135,10 +134,10 @@ router.get('/question/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, 
 
 router.post('/question/:id(\\d+)/answers', answerValidators, asyncHandler(async (req, res, next) => {
   const questionId = parseInt(req.params.id, 10)
-  
+
   // {userId} = Answer
   const { content } = req.body
-  
+
   const validatorErrors = validationResult(req)
   let errors = []
   if (validatorErrors.isEmpty()) {
@@ -162,10 +161,10 @@ router.post('/question/:id(\\d+)/answers', answerValidators, asyncHandler(async 
 // PATCH ANSWER
 router.patch('/question/:id(\\d+)/answers/:id(\\d+)', answerValidators, asyncHandler(async (req, res, next) => {
   // const questionId = parseInt(req.params.id, 10)
-  
+
   // // {userId} = Answer
   // const { content } = req.body
-  
+
   // const validatorErrors = validationResult(req)
   // let errors = []
   // if (validatorErrors.isEmpty()) {
@@ -191,12 +190,12 @@ router.delete('/answers/:id(\\d+)', answerValidators, asyncHandler(async (req, r
   const answerId = parseInt(req.params.id, 10)
 
   console.log(answerId)
-  
-  const answer = await Answer.findOne({ where: {id : answerId}})
+
+  const answer = await Answer.findOne({ where: { id: answerId } })
   // await Answer.destroy({answer});
   await answer.destroy();
 
-  res.json({ 'message':`${answerId} Deleted` })
+  res.json({ 'message': `${answerId} Deleted` })
 
 }))
 
@@ -206,25 +205,32 @@ router.get('/question/:id(\\d+)/edit', csrfProtection, asyncHandler(async (req, 
   res.render('edit-question', { title: 'Ask a Question', question, csrfToken: req.csrfToken() })
 }))
 
-router.patch('/question/:id(\\d+)', questionValidators, asyncHandler(async (req, res, next) => {
+router.post('/question/:id(\\d+)/edit-question', questionValidators, asyncHandler(async (req, res, next) => {
   const questionId = Number(req.params.id)
-  const question = await Question.findByPk(questionId)
-
+  // const question = await Question.findByPk(questionId)
+  // console.log("hellooooooooooooooooooooooo")
   const { title, content } = req.body;
-  
+
   let errors = [];
 
   const validatorErrors = validationResult(req);
 
   if (validatorErrors.isEmpty()) {
     //I need to assign a question ID for each question that is posted ???
-    await question.update({ title, content })
+    await Question.update({ title, content }, { where: { id: questionId } })
     // const question = await Question.findByPk() // ?????????????
     return res.redirect(`/question/${questionId}`)
   } else {
     errors = validatorErrors.array().map((error) => error.msg)
   }
 
+}))
+
+router.post('/question/:id(\\d+)/delete', asyncHandler(async (req, res, next) => {
+  const questionId = Number(req.params.id)
+  const question = await Question.findByPk(questionId)
+  await question.destroy()
+  return res.redirect('/')
 }))
 
 // router.delete('/question/:id(\\d+)')
