@@ -20,7 +20,7 @@ block content
         p(class='user_info' style='text-align: right; color: black; font-weight: normal;') Asked by #[a.user_info= question.User.username]
         hr
         p(id="question_content_text")= question.content
-        if locals.user.id === question.userId
+        if locals.authenticated && locals.user.id === question.userId
           div(class='flex_container')
             //- a(class="edit_button" href=`/question/${question.id}/edit`) Edit Question
       h2 Answers
