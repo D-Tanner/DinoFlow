@@ -22,7 +22,7 @@ block content
         p(id="question_content_text")= question.content
         if locals.authenticated && locals.user.id === question.userId
           div(class='flex_container')
-            //- a(class="edit_button" href=`/question/${question.id}/edit`) Edit Question
+            a(class="edit_button" href=`/question/${question.id}/edit`) Edit Question
       h2 Answers
 
       div.answers_container
