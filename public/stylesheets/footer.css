@@ -1,0 +1,41 @@
+.sidebar {
+    position: absolute;
+    left: 0%;
+    top: 3rem;
+    height: 60%;
+    width: 2rem;
+    background-color: #fdf7e3;
+    transition: width 0.3s ease;
+}
+.sidebar ul {
+    left: -50%;
+    overflow: hidden;
+    opacity: 0;
+    transition: 0.3s ease;
+}
+.sidebar a {
+    /* padding: 15px; */
+    list-style-type: none;
+    height: 3rem;
+    /* border: 1px solid black; */
+    border: 1px solid silver;
+    border-radius: 0.5em;
+    color: #0077cc;
+    background-color: #fdf7e3;
+    margin: 3rem 0px 0rem 1rem;
+    width: 75%;
+    display: grid;
+    text-align: center;
+    vertical-align: middle;
+    /* grid-template-areas:
+        'title title title title title title none'
+        'title title title title title title answered'; */
+}
+.sidebar:hover {
+    width: 11.8rem;
+    border-radius: 0rem 1rem 1rem 0rem;
+}
+.sidebar:hover ul {
+    width: 11.8rem;
+    opacity: 1;
+}

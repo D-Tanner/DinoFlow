@@ -53,7 +53,7 @@ router.post('/ask-question', csrfProtection, questionValidators, asyncHandler(as
 
 router.get('/question/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => {
   const questionId = parseInt(req.params.id, 10)
-  // console.log(req.session)
+  
   let userId;
   if (req.session.auth) {
     userId = req.session.auth.userId
@@ -87,26 +87,31 @@ router.get('/question/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, 
     answer.dataValues.currUserDownVote = false;
 
     answer.dataValues.Votes = answer.Votes.reduce((acc, vote) => {
-      if (vote.isUpvote) {
+      const value = vote.isUpvote;
+      
+      if (value == 1) {
+        
         if (userId)
           if (vote.userId == userId && req.session.auth.userId) {
             answer.dataValues.currUserUpVote = true;
           }
-        return ++acc;
-      } else {
+        return acc += 1;
+      } else if (value == -1) {
+        
         if (userId)
           if (vote.userId == userId) {
             answer.dataValues.currUserDownVote = true;
           }
-        return --acc;
+        return acc -= 1;
       }
+      return acc;
     }, 0)
-
   }
 
+  
+
   const sortedAnswers = question.Answers.sort((a, b) => {
-    //console.log("a   ", a.dataValues.Votes)
-    // console.log("b   ", b.dataValues.Votes)
+   
     if (a.dataValues.Votes <= b.dataValues.Votes) {
       // if (a.createdAt > b.createdAt) {
       return 1
@@ -117,7 +122,8 @@ router.get('/question/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, 
 
 
 
-
+  
+  
   res.render('question', { title: 'Question', question, answers: question.Answers, sortedAnswers, csrfToken: req.csrfToken() },)
 
 }));
@@ -128,10 +134,10 @@ router.get('/question/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, 
 
 router.post('/question/:id(\\d+)/answers', answerValidators, asyncHandler(async (req, res, next) => {
   const questionId = parseInt(req.params.id, 10)
-  // console.log(questionId)
+  
   // {userId} = Answer
   const { content } = req.body
-  // console.log(req.session)
+  
   const validatorErrors = validationResult(req)
   let errors = []
   if (validatorErrors.isEmpty()) {
@@ -152,6 +158,47 @@ router.post('/question/:id(\\d+)/answers', answerValidators, asyncHandler(async 
 
 }))
 
+// PATCH ANSWER
+router.patch('/question/:id(\\d+)/answers/:id(\\d+)', answerValidators, asyncHandler(async (req, res, next) => {
+  // const questionId = parseInt(req.params.id, 10)
+  
+  // // {userId} = Answer
+  // const { content } = req.body
+  
+  // const validatorErrors = validationResult(req)
+  // let errors = []
+  // if (validatorErrors.isEmpty()) {
+  //   const ans = await Answer.create(
+  //     {
+  //       content,
+  //       questionId,
+  //       userId: req.session.auth.userId
+  //     }
+  //   )
+  //   return res.json(ans)
+  // }
+  // else {
+  //   errors = validatorErrors.array().map(err => err.msg)
+  // }
+
+  // res.json({ errors })
+
+}))
+
+// DELETE ANSWER
+router.delete('/answers/:id(\\d+)', answerValidators, asyncHandler(async (req, res, next) => {
+  const answerId = parseInt(req.params.id, 10)
+
+  console.log(answerId)
+  
+  const answer = await Answer.findOne({ where: {id : answerId}})
+  // await Answer.destroy({answer});
+  await answer.destroy();
+
+  res.json({ 'message':`${answerId} Deleted` })
+
+}))
+
 router.get('/question/:id(\\d+)/edit', csrfProtection, asyncHandler(async (req, res, next) => {
   const questionId = Number(req.params.id)
   const question = await Question.findByPk(questionId)
@@ -163,7 +210,7 @@ router.post('/question/:id(\\d+)/edit-question', questionValidators, asyncHandle
   // const question = await Question.findByPk(questionId)
   // console.log("hellooooooooooooooooooooooo")
   const { title, content } = req.body;
-  // console.log('TITLE AND CONTENT!@!@#!@!#@', title, content)
+
   let errors = [];
 
   const validatorErrors = validationResult(req);

@@ -5,6 +5,8 @@ html
         title="DinoFlow"
         link(rel='stylesheet' href='/stylesheets/reset.css')
         link(rel='stylesheet' href='/stylesheets/navbar.css')
+        link(rel='stylesheet' href='/stylesheets/footer.css')
+        
   body
     header.navbar__container
       nav
@@ -22,6 +24,14 @@ html
           else
             a#login-button(href='/users/login') Login
             a#register-button(href='/users/register') Register
+    div.sidebar
+      ul
+        a(href='https://github.com/D-Tanner/DinoFlow') Github Repo
+        a(href='https://www.linkedin.com/in/dillon-tanner-a881951aa/') Dillon Tanner
+        a(href='https://www.linkedin.com/in/sebthtan/') Sebastian Tan
+        a(href='https://www.linkedin.com/in/jchc/') Juan Hernandez
+        a(href='https://www.linkedin.com/in/tolulope-v-924b94174/') Tolu Verissimo
+    div.sidebar_toggle 
     main.content
       div(id="background_image")
     block questionButton
