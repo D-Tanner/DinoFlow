@@ -81,7 +81,7 @@ button {
   border: none;
 }
 
-.button_votes[disabled]{
+.button_votes[voted=true]{
   background-color: rgba(127, 131, 127, 0.3)
 }
 

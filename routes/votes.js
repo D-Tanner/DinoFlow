@@ -18,12 +18,13 @@ router.post("/answers/:id(\\d+)/votes", asyncHandler(async (req, res) => {
     let voteCount;
     //setting up response if vote exists
     if (voteExists) {
-        if (voteExists.isUpvote === isUpvote) {
+        if ((isUpvote && voteExists.isUpvote === 1) || (!isUpvote && voteExists.isUpvote === -1)) {
+            await voteExists.update({ isUpvote: 0});
             response = { sameVote: true }
-        } else if (!req.body.isUpvote) {
-            response = await voteExists.update({ isUpvote: false });
+        } else if ((!isUpvote && voteExists.isUpvote === 1) || (!isUpvote && voteExists.isUpvote === 0)) {
+            response = await voteExists.update({ isUpvote: -1 });
         } else {
-            response = await voteExists.update({ isUpvote: true });
+            response = await voteExists.update({ isUpvote: 1 });
         }
         voteCount = await countVotes(answerId);
         //return response and voteCount
@@ -49,12 +50,16 @@ router.post("/answers/:id(\\d+)/votes", asyncHandler(async (req, res) => {
 async function countVotes(answerId) {
     //acquiring all votes based on answerid
     const votes = await Vote.findAll({ where: { answerId } })
+    
     //calculating vote total
     return voteCount = votes.reduce((acc, vote) => {
-        if (vote.dataValues.isUpvote) {
-            return ++acc;
+        
+        if (vote.dataValues.isUpvote == 1) {
+            return acc += 1;
+        } else if (vote.dataValues.isUpvote == -1){
+            return acc -= 1;
         }
-        return --acc;
+        return acc;
     }, 0)
 }
 // router.get("/answers/:id(\\d+)/votes", asyncHandler(async (req, res) => {
@@ -62,9 +67,13 @@ async function countVotes(answerId) {
 //     const answerId = parseInt(req.params.id, 10);
 
 //     const voteExists = await Vote.findOne({ where: { userId, answerId } });
-//     console.log(voteExists);
+//     
 
 //     res.json(voteExists)
 // }))
+
+router.delete("/answers/:id(\\d+)/votes", asyncHandler(async (req, res) => {
+
+}));
 
 module.exports = router
