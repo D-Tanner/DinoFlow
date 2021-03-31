@@ -109,6 +109,10 @@ button {
   background-color: rgba(127, 131, 127, 0.3)
 }
 
+.button_votes:focus {
+  outline: none;
+}
+
 .vote_count{
   width: 100%;
   text-align: center;
