@@ -37,3 +37,10 @@
     opacity: 1;
     transition: 1.3s ease;
 }
+.sidebar h2 {
+    margin: 1rem 0px -2rem 1.2rem;
+    padding: 0;
+    width: 7rem;
+    font-weight: bold;
+    /* text-decoration: underline; */
+}

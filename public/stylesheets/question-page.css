@@ -38,9 +38,9 @@ button {
 .single_answers_container {
 
     display: grid;
-    grid-template-columns: 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5%;
+    grid-template-columns: 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 7% 7%;
     grid-template-rows: 100%;
-    grid-template-areas: 'answer answer answer answer answer answer answer answered';
+    grid-template-areas: 'answer answer answer answer answer answer answer answered answerEdit answerDelete';
     width: 100%;
 }
 
@@ -221,6 +221,16 @@ textarea {
 .edit_button:hover {
   background-color: rgb(137, 193, 245);
 }
+
+.sm_edit_button, .sm_cancel_button {
+    height: 2em;
+    font-size: 15px;
+}
+
+.sm_cancel_button {
+    padding: 0;
+}
+
 
 #delete_question {
   border: none;

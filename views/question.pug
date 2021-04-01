@@ -33,7 +33,7 @@ block content
 
       div.answers_container
         each answer in answers
-          div(class="answers_section" data-answerid=answer.id)
+          div(class="answers_section" answerId=answer.id)
             div(class="votes")
               //- upvote button
               if locals.authenticated
@@ -59,8 +59,8 @@ block content
               p(class='answered_by' style='text-align: center') Answered by #[a.user_info= answer.User.username]
               if locals.user
                 if locals.user.id === answer.userId
-                  button.button_delete( data-answerid=answer.id) Delete
-                  button.button_edit( data-answerid=answer.id) Edit
+                  button.button_delete( class='cancel_button sm_cancel_button' data-answerid=answer.id) Delete
+                  a.button_edit(class="edit_button sm_edit_button" href=`/answers/${answer.id}/edit`  data-answerid=answer.id) Edit
 
       if locals.authenticated
         //- +validationErrorSummary(errors)
@@ -68,7 +68,7 @@ block content
         form(id='answer_to_question')
           input(type='hidden' name='_csrf' value=csrfToken)
           input(type='hidden' name='questionId' value=question.id)
-          +field('', 'answer', answer, 'textarea', 'Write your answer here')
+          +field('', 'answer', "" , 'textarea', 'Write your answer here')
           div(class="buttons")
             button(type='submit' id="answer_button") Post Your Answer
             a(class="cancel_button" href='/') Cancel
