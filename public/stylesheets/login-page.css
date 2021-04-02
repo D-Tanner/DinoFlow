@@ -42,6 +42,7 @@ h1 {
 
 #login_button:hover {
     background-color: rgb(137, 193, 245);
+    cursor: pointer;
 }
 
 #cancel_button {
@@ -62,6 +63,7 @@ h1 {
 
 #cancel_button:hover {
     background-color: rgb(228, 15, 15);
+    cursor: pointer;
 }
 
 #cancel_button-space {

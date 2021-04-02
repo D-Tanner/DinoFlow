@@ -40,7 +40,7 @@
 
 .sidebar:hover {
     width: 8.9rem;
-    background-color: #ffb223;
+    /* background-color: #ffb223; */
     transition: .4s ease;
 }
 

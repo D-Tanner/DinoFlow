@@ -30,7 +30,7 @@
     width: 8.9rem;
     border-radius: 0rem 1rem 1rem 0rem;
     transition: 0.45s ease;
-    background-color: #ffb223;
+    /* background-color: #ffb223; */
 }
 .sidebar:hover ul {
     width: 8.9rem;
