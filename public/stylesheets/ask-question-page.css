@@ -33,12 +33,14 @@
     text-overflow: clip;
     overflow: hidden;
     white-space: nowrap;
+    border: none;
 }
 
 
 
 #post_a_question:hover {
     background-color: rgb(137, 193, 245);
+    cursor: pointer;
 }
 
 #cancel {

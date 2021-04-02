@@ -69,6 +69,10 @@ button {
     vertical-align: middle;
     align-self: center;
     color: black;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
 .single_answers_buttons {
@@ -79,6 +83,11 @@ button {
 
 .button_delete {
   grid-area: answerDelete;
+  border: none;
+}
+
+.button_delete:hover {
+  cursor: pointer;
 }
 
 .button_edit {
@@ -135,7 +144,7 @@ textarea {
 
 #answer_button {
 
-    background-color: #0095ff;
+    background-color: #0077cc;
     color: white;
     height: 44px;
     width: 150px;
@@ -152,6 +161,7 @@ textarea {
     text-overflow: clip;
     overflow: hidden;
     white-space: nowrap;
+    border: none;
 
 }
 
@@ -212,12 +222,13 @@ textarea {
     background-color: #0077cc;
     border-radius: 5px;
     box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.4);
-    height: 44px;
+    height: 30px;
     transition-duration: 0.2s;
     margin-right: 5px;
     padding: 10px;
     text-decoration: none;
     float: left;
+    width: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -239,4 +250,12 @@ textarea {
 
 #delete_question {
   border: none;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 15px;
+}
+#delete_question:hover {
+  cursor: pointer;
 }
