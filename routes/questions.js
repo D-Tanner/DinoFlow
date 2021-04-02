@@ -108,8 +108,6 @@ router.get('/question/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, 
     }, 0)
   }
 
-
-
   const sortedAnswers = question.Answers.sort((a, b) => {
 
     if (a.dataValues.Votes <= b.dataValues.Votes) {
@@ -119,10 +117,6 @@ router.get('/question/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, 
       return -1
     }
   })
-
-
-
-
 
   res.render('question', { title: 'Question', question, answers: question.Answers, sortedAnswers, csrfToken: req.csrfToken() },)
 
@@ -158,38 +152,40 @@ router.post('/question/:id(\\d+)/answers', answerValidators, asyncHandler(async 
 
 }))
 
+// EDIT ANSWER PAGE
+
+router.get('/answers/:id(\\d+)/edit', csrfProtection, asyncHandler(async (req, res, next) => {
+  const answerId = Number(req.params.id)
+  const answer = await Answer.findByPk(answerId)
+  res.render('edit-answer', { answer, csrfToken: req.csrfToken() })
+}))
+
 // PATCH ANSWER
-router.patch('/question/:id(\\d+)/answers/:id(\\d+)', answerValidators, asyncHandler(async (req, res, next) => {
-  // const questionId = parseInt(req.params.id, 10)
+router.post('/answers/:id(\\d+)', answerValidators, asyncHandler(async (req, res, next) => {
+  const answerId = parseInt(req.params.id, 10)
 
-  // // {userId} = Answer
-  // const { content } = req.body
+  const { content } = req.body;
 
-  // const validatorErrors = validationResult(req)
-  // let errors = []
-  // if (validatorErrors.isEmpty()) {
-  //   const ans = await Answer.create(
-  //     {
-  //       content,
-  //       questionId,
-  //       userId: req.session.auth.userId
-  //     }
-  //   )
-  //   return res.json(ans)
-  // }
-  // else {
-  //   errors = validatorErrors.array().map(err => err.msg)
-  // }
+  let errors = [];
 
-  // res.json({ errors })
+  const validatorErrors = validationResult(req);
+
+  if (validatorErrors.isEmpty()) {
+    
+    
+    await Answer.update({ content }, { where: { id: answerId } })
+    answer = await Answer.findByPk(answerId)
+    return res.redirect(`/question/${answer.dataValues.questionId}`)
+
+  } else {
+    errors = validatorErrors.array().map((error) => error.msg)
+  }
 
 }))
 
 // DELETE ANSWER
 router.delete('/answers/:id(\\d+)', answerValidators, asyncHandler(async (req, res, next) => {
   const answerId = parseInt(req.params.id, 10)
-
-  console.log(answerId)
 
   const answer = await Answer.findOne({ where: { id: answerId } })
   // await Answer.destroy({answer});
@@ -208,7 +204,7 @@ router.get('/question/:id(\\d+)/edit', csrfProtection, asyncHandler(async (req, 
 router.post('/question/:id(\\d+)/edit-question', questionValidators, asyncHandler(async (req, res, next) => {
   const questionId = Number(req.params.id)
   // const question = await Question.findByPk(questionId)
-  // console.log("hellooooooooooooooooooooooo")
+ 
   const { title, content } = req.body;
 
   let errors = [];

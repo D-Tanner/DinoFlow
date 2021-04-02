@@ -31,15 +31,27 @@ window.addEventListener("load", (event) => {
         const newAnswerContainer = createNewElement('div', 'class', 'single_answers_container')
         const newAnswerSection = createNewElement('div', 'class', 'answers_section')
         const newAnsweredBy = createNewElement('p', 'class', 'answered_by')
+        const deleteButton = createNewElement('button','class', 'button_delete cancel_button sm_cancel_button')
+        const editButton = createNewElement('a','class', 'button_edit edit_button sm_edit_button')
+
+        deleteButton.setAttribute('data-answerid',`${answer.id}`)
+        editButton.setAttribute('data-answerid',`${answer.id}`)
+        editButton.setAttribute('href',`/answers/${answer.id}/edit`)
+        deleteButton.innerHTML = 'Delete'
+        editButton.innerHTML = 'Edit'
+        deleteAnswerAddEvent(deleteButton);
 
         newAnswer.innerHTML = answer.content
 
         newAnsweredBy.innerHTML = 'You answered'
 
+        newAnswerSection.setAttribute('answerid', `${answer.id}`)
         newAnswerSection.appendChild(createNewVote(answer.id))
 
         newAnswerContainer.appendChild(newAnswer)
         newAnswerContainer.appendChild(newAnsweredBy)
+        newAnswerContainer.appendChild(deleteButton)
+        newAnswerContainer.appendChild(editButton)
         answersContainer.appendChild(newAnswerSection)
         newAnswerSection.appendChild(newAnswerContainer)
 
@@ -73,11 +85,11 @@ window.addEventListener("load", (event) => {
     downVoteAddEvent(uv);
   })
   //---------------Answer Post Creation Handling--------------------//
-  let editButtons = document.querySelectorAll('button.button_edit')
+  // let editButtons = document.querySelectorAll('button.button_edit')
   let deleteButtons = document.querySelectorAll('button.button_delete')
-  editButtons.forEach(button => {
-    editAnswerAddEvent(button);
-  })
+  // editButtons.forEach(button => {
+  //   editAnswerAddEvent(button);
+  // })
   deleteButtons.forEach(button => {
     deleteAnswerAddEvent(button);
   })
@@ -215,14 +227,6 @@ function downVoteAddEvent(vote) {
 
 //------------------------Answer Handling Event functions-----------------------------//
 
-function editAnswerAddEvent(button){
-  button.addEventListener('click', async e => {
-    e.preventDefault();
-    const answerId = e.currentTarget.dataset.answerid
-    return console.log('Answer Edit', answerId);
-  })
-  
-}
 function deleteAnswerAddEvent(button){
   button.addEventListener('click', async e => {
     e.preventDefault();
@@ -234,7 +238,9 @@ function deleteAnswerAddEvent(button){
     });
 
     const result = await response.json()
-
+    const answer = document.querySelector(`div[answerid='${answerId}']`);
+    answer.remove();
+    
     return result;
   })
   
